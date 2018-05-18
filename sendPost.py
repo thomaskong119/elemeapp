@@ -5,6 +5,9 @@ from datetime import datetime
 import time
 import schedule
 
+ordertemp = [0]*15
+orderlast = [0]*15
+
 def job():
 
     with open('body.json') as f:
@@ -25,11 +28,12 @@ def job():
     content = ''
 
     for index in range(len(d1)):
-        # print(d1[index]['serviceName'] + str(d1[index]['orderCount']))
-        content += (d1[index]['serviceName'] + str(d1[index]['orderCount'])+"\n")
-        file_object.write(d1[index]['serviceName'] + str(d1[index]['orderCount'])+"\n")
+        ordertemp[index] = int(d1[index]['orderCount']) - orderlast[index]
+        orderlast[index] = int(d1[index]['orderCount'])
+        content += (d1[index]['serviceName'] + str(d1[index]['orderCount'])+ "/" +str(ordertemp[index]) + "\n")
+        file_object.write(d1[index]['serviceName'] + str(d1[index]['orderCount']) + "/" +str(ordertemp[index]) + "\n")
 
-    file_object.write(str(datetime.now()))
+    file_object.write(str(datetime.now())+"\n===========================================\n")
     file_object.close()
 
     # print (content)
@@ -47,10 +51,12 @@ def job():
         subres = urllib.request.urlopen(subreq)
         d2 = json.load(subres)
         print (d2)
+        pass
 
 job()
+# schedule.every(0.1).minutes.do(job)
 schedule.every(1).hour.do(job)
 
 while True:
     schedule.run_pending()
-    time.sleep(1)
+    time.sleep(0.01)
