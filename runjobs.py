@@ -10,8 +10,10 @@ ordertemp = [0]*20
 orderlast = [0]*20
 dingurl = 'https://oapi.dingtalk.com/robot/send?access_token=549961be9efed1a4a1c56318e3480834521ad64920f9d7e29263dbb4bb0d30a8'
 urlcomment = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'
+orderurl = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=ClassifyService.getServicesByClassifyCode'
 header = {'Content-Type': 'application/json'}
 
+# 实时抓取评价
 def jobgetcomment():
 
     with open('commentbody.json') as f:
@@ -71,17 +73,16 @@ def jobgetcomment():
         print (dingres.read() + "\n--getcomment")
         sent = 0
 
+# 评分计算
 def jobgetallcomment():
 
     with open('comment.json') as f:
         data = json.load(f)
     
-    url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'
-
     file_object = open('commentdetail.txt', 'w') 
 
     params = json.dumps(data).encode('utf8')
-    req = urllib.request.Request(url, data=params, headers=header)
+    req = urllib.request.Request(urlcomment, data=params, headers=header)
     try:
         res = urllib.request.urlopen(req)
         d1 = json.load(res)
@@ -137,18 +138,16 @@ def jobgetallcomment():
     dingres = urllib.request.urlopen(dingreq)
     print (dingres.read() + "\n--getallcomment")
 
-
+# 销量统计
 def jobsendPostDing():
 
     with open('body.json') as f:
         data = json.load(f)
 
     file_object = open('ordercount.txt', 'a') 
-
-    url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=ClassifyService.getServicesByClassifyCode'
     
     params = json.dumps(data).encode('utf8')
-    req = urllib.request.Request(url, data=params, headers=header)
+    req = urllib.request.Request(orderurl, data=params, headers=header)
     res = urllib.request.urlopen(req)
 
     d1 = json.load(res)
@@ -198,12 +197,15 @@ def jobsendPostDing():
         print (dingres.read())
         pass
 
+# 四舍五入，小数点后一位
 def round_up(value):     
       return round(value * 10) / 10.0
 
 jobsendPostDing()
 jobgetcomment()
 jobgetallcomment()
+
+# 定时任务
 schedule.every().day.at("10:00").do(jobgetallcomment)
 schedule.every(0.2).minutes.do(jobgetcomment)
 for runtime in range(8,24):
