@@ -1,41 +1,56 @@
 import urllib.request
 import json
 from pprint import pprint
-from time import strftime,gmtime
-from submail import submail
+from datetime import datetime
+import time
+import schedule
 
-with open('body.json') as f:
-    data = json.load(f)
+def job():
 
-file_object = open('ordercount.txt', 'a') 
+    with open('body.json') as f:
+        data = json.load(f)
 
-url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=ClassifyService.getServicesByClassifyCode'
-header = {'Content-Type': 'application/json'}
+    file_object = open('ordercount.txt', 'a') 
 
-params = json.dumps(data).encode('utf8')
-req = urllib.request.Request(url, data=params, headers=header)
-res = urllib.request.urlopen(req)
+    url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=ClassifyService.getServicesByClassifyCode'
+    header = {'Content-Type': 'application/json'}
 
-d1 = json.load(res)
-d1 = d1['result']['result']
+    params = json.dumps(data).encode('utf8')
+    req = urllib.request.Request(url, data=params, headers=header)
+    res = urllib.request.urlopen(req)
 
-for index in range(len(d1)):
-    print(d1[index]['serviceName'] + str(d1[index]['orderCount']))
-    file_object.write(d1[index]['serviceName'] + str(d1[index]['orderCount'])+"\n")
+    d1 = json.load(res)
+    d1 = d1['result']['result']
 
-file_object.write(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "\n=======================================")
+    content = ''
 
-file_object.close()
+    for index in range(len(d1)):
+        # print(d1[index]['serviceName'] + str(d1[index]['orderCount']))
+        content += (d1[index]['serviceName'] + str(d1[index]['orderCount'])+"\n")
+        file_object.write(d1[index]['serviceName'] + str(d1[index]['orderCount'])+"\n")
 
-manager = submail.build("sms")
-msg = manager.message()
-msg['appid'] = '22547'
-msg['signature'] = 'dded839a7db21a859155793987c46c85'
-msg['to'] = '18676559554'
-# variables in your message template
-msg['vars'] = {"var1":"xxxxx","var2":"yyyy"}
-# send message,return response
-result = msg.send(stype="xsend", inter=False)
+    file_object.write(str(datetime.now()))
+    file_object.close()
 
-if(res.status != 200):
-    exit()
+    # print (content)
+
+    appid = '22547'
+    to = '18511067574'
+    signature = 'dded839a7db21a859155793987c46c85'
+    submaildata = 'appid='+appid+'&to='+to+'&content=【小评果】'+content+'退订回N &signature='+signature
+    submailurl = 'https://api.mysubmail.com/message/send.json'
+    submailparam = submaildata.encode('utf8')
+    subreq = urllib.request.Request(submailurl, data=submailparam)
+    if int(datetime.now().hour) in range(0,8):
+        print (str(datetime.now().hour)+" Pass")
+    else:
+        subres = urllib.request.urlopen(subreq)
+        d2 = json.load(subres)
+        print (d2)
+
+job()
+schedule.every(1).hour.do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
