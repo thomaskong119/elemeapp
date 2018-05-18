@@ -26,6 +26,7 @@ def job():
     # for index in range(len(d1)):
     #     file_object.write("\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore']))
     count = 0
+    scoresum = 0
     
     for index in range(len(d1)):
         t1 = datetime.strptime(d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
@@ -33,10 +34,12 @@ def job():
         if t1 > d:
             file_object.write("\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore']))
             count += 1
+            scoresum += int(d1[index]['compositionalScore'])
         else:
             break
 
-    print (count)
+    scoreaverage = scoresum / count
+    print (scoreaverage)
     file_object.write(str(datetime.now())+"\n===========================================")
     file_object.close()
 
