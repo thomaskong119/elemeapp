@@ -21,14 +21,14 @@ def jobgetcomment():
     targetLine = ""
 
     try:
-        file_temp = open('commentdetail.txt','r')
+        file_temp = open('getcomment.txt','r')
         mLines = file_temp.readlines()
         targetLine = mLines[-3]
         file_temp.close()
     except FileNotFoundError:
         pass
 
-    file_object = open('commentdetail.txt', 'a') 
+    file_object = open('getcomment.txt', 'a') 
 
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(urlcomment, data=params, headers=header)
@@ -77,7 +77,7 @@ def jobgetallcomment():
 
     data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":500,"serviceNO":"6d4fdd6db6c4c2a0507599e5c29efdfb"}}
     
-    file_object = open('commentdetail.txt', 'w') 
+    file_object = open('getallcomment.txt', 'w') 
 
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(urlcomment, data=params, headers=header)

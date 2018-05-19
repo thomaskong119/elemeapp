@@ -17,7 +17,7 @@ def job():
     url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'
     header = {'Content-Type': 'application/json'}
 
-    file_object = open('commentdetail.txt', 'w') 
+    file_object = open('getallcomment.txt', 'w') 
 
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(url, data=params, headers=header)
