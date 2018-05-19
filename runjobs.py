@@ -16,8 +16,7 @@ header = {'Content-Type': 'application/json'}
 # 实时抓取评价
 def jobgetcomment():
 
-    with open('commentbody.json') as f:
-        data = json.load(f)
+    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"ZTliYTJiMDgtOGQ5NC00NWZk1fJYcQYWZlOT","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":1,"serviceNO":"6d4fdd6db6c4c2a0507599e5c29efdfb"}}
     
     targetLine = ""
 
@@ -76,8 +75,7 @@ def jobgetcomment():
 # 评分计算
 def jobgetallcomment():
 
-    with open('comment.json') as f:
-        data = json.load(f)
+    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":500,"serviceNO":"6d4fdd6db6c4c2a0507599e5c29efdfb"}}
     
     file_object = open('commentdetail.txt', 'w') 
 
@@ -141,8 +139,7 @@ def jobgetallcomment():
 # 销量统计
 def jobsendPostDing():
 
-    with open('body.json') as f:
-        data = json.load(f)
+    data = {"id":"5DF959EFBA4B45B9936F604665A92916|1525949952348","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"ClassifyService","method":"getServicesByClassifyCode","params":{"classifyCode":"1","offset":0,"limit":99}}
 
     file_object = open('ordercount.txt', 'a') 
     

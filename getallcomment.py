@@ -9,8 +9,10 @@ import math
 
 def job():
 
-    with open('comment.json') as f:
-        data = json.load(f)
+    # with open('comment.json') as f:
+    #     data = json.load(f)
+
+    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":500,"serviceNO":"6d4fdd6db6c4c2a0507599e5c29efdfb"}}
     
     url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'
     header = {'Content-Type': 'application/json'}
