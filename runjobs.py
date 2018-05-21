@@ -13,6 +13,7 @@ dingurl = 'https://oapi.dingtalk.com/robot/send?access_token=549961be9efed1a4a1c
 urlcomment = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'
 orderurl = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=ClassifyService.getServicesByClassifyCode'
 header = {'Content-Type': 'application/json'}
+test = 0
 
 # 实时抓取评价
 def jobgetcomment():
@@ -33,20 +34,25 @@ def jobgetcomment():
 
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(urlcomment, data=params, headers=header)
-    res = urllib.request.urlopen(req)
+    try:
+        res = urllib.request.urlopen(req)
+        d1 = json.load(res)
+        d1 = d1['result']['result']
+        sent = 0
 
-    d1 = json.load(res)
-    d1 = d1['result']['result']
-    sent = 0
+        if str(targetLine[0:17]) != str(d1[0]['orderNO']):
+            for index in range(len(d1)):
+                file_object.write("\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+ str(d1[index]['valuator']) + str(d1[index]['createTime']) +"\n")
+            print ("New Comment" + "\n--getcomment")
+            sent = 1
+        else:
+            file_object.write("\n"+ str(d1[0]['orderNO']) + "Not New\n")
+            print ("Nothing New" + "\n--getcomment")
+    except TypeError:
+        file_object.write("\nTypeError\n")
+        print ("TypeError, will try again")
+        jobgetcomment()
 
-    if str(targetLine[0:17]) != str(d1[0]['orderNO']):
-        for index in range(len(d1)):
-            file_object.write("\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+ str(d1[index]['valuator']) + str(d1[index]['createTime']) +"\n")
-        print ("New Comment" + "\n--getcomment")
-        sent = 1
-    else:
-        file_object.write("\n"+ str(d1[0]['orderNO']) + "Not New\n")
-        print ("Nothing New" + "\n--getcomment")
     file_object.write(str(datetime.now())+"\n===========================================")
     file_object.close()
 
@@ -68,7 +74,7 @@ def jobgetcomment():
 
     if int(d1[0]['compositionalScore']) == 5.0:
         pass
-    elif sent == 1:
+    elif sent == 1 & test == 0:
         dingres = urllib.request.urlopen(dingreq)
         print (str(dingres.read()) + "\n--getcomment")
         sent = 0
@@ -134,8 +140,11 @@ def jobgetallcomment():
     }
     json_str = json.dumps(dingdata).encode('utf8')
     dingreq = urllib.request.Request(dingurl, data=json_str, headers= header)
-    dingres = urllib.request.urlopen(dingreq)
-    print (str(dingres.read()) + "\n--getallcomment")
+    if test == 0:
+        dingres = urllib.request.urlopen(dingreq)
+        print (str(dingres.read()) + "\n--getallcomment")
+    else:
+        print ("getallcomment test")
 
 # 销量统计
 def jobsendPostDing():
@@ -187,12 +196,13 @@ def jobsendPostDing():
     subreq = urllib.request.Request(submailurl, data=submailparam)
     if int(datetime.now().hour) in range(0,8):
         print (str(datetime.now().hour)+" Pass" + "\n--sendPostDing")
-    else:
-        subres = urllib.request.urlopen(subreq)
-        d2 = json.load(subres)
+    elif test ==0:
+        # subres = urllib.request.urlopen(subreq)
+        # d2 = json.load(subres)
         dingres = urllib.request.urlopen(dingreq)
         print (str(dingres.read()) + "\n--sendPostDing")
-        pass
+    else:
+        print ("sendPostDing test")
 
 # 四舍五入，小数点后一位
 def round_up(value):     
