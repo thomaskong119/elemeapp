@@ -2,6 +2,7 @@ import urllib.request
 import json
 from pprint import pprint
 from datetime import datetime
+from datetime import timedelta
 import time
 import schedule
 import math
@@ -69,7 +70,7 @@ def jobgetcomment():
         pass
     elif sent == 1:
         dingres = urllib.request.urlopen(dingreq)
-        print (dingres.read() + "\n--getcomment")
+        print (str(dingres.read()) + "\n--getcomment")
         sent = 0
 
 # 评分计算
@@ -122,7 +123,7 @@ def jobgetallcomment():
     dingdata = {
         "msgtype": "text",
         "text": {
-            "content": str(d1[0]['createTime'])+"有新的差评，"+str(d1[0]['compositionalScore'])+"分来自于"+str(d1[0]['valuator'])+"用户说"+str(d1[0]['content'])
+            "content": content
         },
         "at": {
             "atMobiles": [
@@ -134,7 +135,7 @@ def jobgetallcomment():
     json_str = json.dumps(dingdata).encode('utf8')
     dingreq = urllib.request.Request(dingurl, data=json_str, headers= header)
     dingres = urllib.request.urlopen(dingreq)
-    print (dingres.read() + "\n--getallcomment")
+    print (str(dingres.read()) + "\n--getallcomment")
 
 # 销量统计
 def jobsendPostDing():
@@ -190,8 +191,7 @@ def jobsendPostDing():
         subres = urllib.request.urlopen(subreq)
         d2 = json.load(subres)
         dingres = urllib.request.urlopen(dingreq)
-        print (d2 + "\n--sendPostDing")
-        print (dingres.read())
+        print (str(dingres.read()) + "\n--sendPostDing")
         pass
 
 # 四舍五入，小数点后一位
