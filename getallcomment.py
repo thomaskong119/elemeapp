@@ -12,7 +12,7 @@ def job():
     # with open('comment.json') as f:
     #     data = json.load(f)
 
-    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":500,"serviceNO":"6d4fdd6db6c4c2a0507599e5c29efdfb"}}
+    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":900,"serviceNO":"6d4fdd6db6c4c2a0507599e5c29efdfb"}}
     
     url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'
     header = {'Content-Type': 'application/json'}
@@ -32,7 +32,7 @@ def job():
         
         for index in range(len(d1)):
             t1 = datetime.strptime(d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
-            d = datetime.now() - timedelta(days=30)
+            d = datetime.now() - timedelta(days=900)
             if t1 > d:
                 file_object.write("\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+" "+ str(d1[index]['createTime']))
                 count += 1
@@ -40,6 +40,7 @@ def job():
             else:
                 break
 
+        print (count)
         scorenow = (round_up(scoresum / count*10000))/10000
         content = "目前评分：" + str(scorenow) + "\n"
         for score in range(math.ceil(scoresum / count*10), 51, 1):

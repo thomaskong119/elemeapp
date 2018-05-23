@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <table align="center" width=100% border="1" style="font-family:'微软雅黑'; font-size:12px;">
+        <tr><th>店铺信息</th><th>评价ID</th><th>首评</th><th>次评</th><th>提交时间</th><th>更新时间</th><th>更新人</th><th>状态</th><th>顾客</th><th>电话</th><th>AppID</th><th>订单ID</th><th>是否退款</th></tr>
+        {% for id in results %}
+        <tr onmouseover="this.style.backgroundColor='#c4e4ff'" onmouseout="this.style.backgroundColor=''">
+            <td>{{id.shopid}}<br />{{id.creator}}</td>
+            <td>{{id.evaluateid}}</td>
+            <td><b>{{id.beforerating}}</b><br />{{id.beforecontent}}<br/>评价时间{{id.beforetime|date:"Y-m-d H:i:s" }}<br/>订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</td>
+            <td><b>{{id.afterrating}}</b><br />{{id.aftercontent}}<br/>评价时间{{id.aftertime|date:"Y-m-d H:i:s" }}</td>
+            <td>{{id.createtime|date:"Y-m-d H:i:s" }}</td>
+            <td>{{id.revisetime|date:"Y-m-d H:i:s" }}</td>
+            <td>{{id.reviser}}</td>
+            <td width="50px">{{id.isrevise}}</td>
+            <td>{{id.buyer}}</td>
+            <td>{{id.phone}}</td>
+            <td>{{id.appid}}</td>
+            <td>{{id.orderid}}</td>
+            <td>{{id.isrefund}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
