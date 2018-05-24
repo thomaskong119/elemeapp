@@ -27,10 +27,11 @@ def jobgetcomment():
         mLines = file_temp.readlines()
         targetLine = mLines[-3]
         file_temp.close()
-    except FileNotFoundError:
+    except:
         pass
 
     file_object = open('getcomment.txt', 'a') 
+    sent = 0
 
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(urlcomment, data=params, headers=header)
@@ -38,19 +39,17 @@ def jobgetcomment():
         res = urllib.request.urlopen(req)
         d1 = json.load(res)
         d1 = d1['result']['result']
-        sent = 0
 
         if str(targetLine[0:17]) != str(d1[0]['orderNO']):
-            for index in range(len(d1)):
-                file_object.write("\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+ str(d1[index]['valuator']) + str(d1[index]['createTime']) +"\n")
+            file_object.write("\n" + str(d1[0]['orderNO']) +" "+ str(d1[0]['compositionalScore'])+ str(d1[0]['valuator']) + str(d1[0]['createTime']) +"\n")
             print ("New Comment" + "\n--getcomment")
             sent = 1
         else:
             file_object.write("\n"+ str(d1[0]['orderNO']) + "Not New\n")
             print ("Nothing New" + "\n--getcomment")
-    except TypeError:
-        file_object.write("\nTypeError\n")
-        print ("TypeError, will try again")
+    except:
+        file_object.write("\nError\n")
+        print ("Error, will try again")
         jobgetcomment()
 
     file_object.write(str(datetime.now())+"\n===========================================")
@@ -72,11 +71,15 @@ def jobgetcomment():
     json_str = json.dumps(dingdata).encode('utf8')
     dingreq = urllib.request.Request(dingurl, data=json_str, headers= header)
 
-    if int(d1[0]['compositionalScore']) == 5.0:
-        pass
-    elif sent == 1 & test == 0:
-        dingres = urllib.request.urlopen(dingreq)
-        print (str(dingres.read()) + "\n--getcomment")
+    if test == 0:
+        if int(d1[0]['compositionalScore']) == 5.0:
+            pass
+        elif sent == 1:
+            dingres = urllib.request.urlopen(dingreq)
+            print (str(dingres.read()) + "\nSent --getcomment")
+            sent = 0
+    elif sent == 1:
+        print ("Test\nSent --getcomment")
         sent = 0
 
 # 评分计算

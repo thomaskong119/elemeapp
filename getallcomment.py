@@ -1,3 +1,4 @@
+#coding=utf-8
 import urllib.request
 import json
 from pprint import pprint
@@ -12,6 +13,9 @@ def job():
     # with open('comment.json') as f:
     #     data = json.load(f)
 
+    # 店客多  749ff8fc717c4426e825e8d42ac6d4ce
+    # 超级店长  7c1fccc89fd9c3a356ab276fdf9e4403
+    # 小评果  6d4fdd6db6c4c2a0507599e5c29efdfb
     data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":900,"serviceNO":"6d4fdd6db6c4c2a0507599e5c29efdfb"}}
     
     url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'

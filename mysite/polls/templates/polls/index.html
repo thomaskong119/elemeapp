@@ -3,29 +3,163 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>差评修改服务后台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <table align="center" width=100% border="1" style="font-family:'微软雅黑'; font-size:12px;">
-        <tr><th>店铺信息</th><th>评价ID</th><th>首评</th><th>次评</th><th>提交时间</th><th>更新时间</th><th>更新人</th><th>状态</th><th>顾客</th><th>电话</th><th>AppID</th><th>订单ID</th><th>是否退款</th></tr>
+        <tr><th>店铺ID</th><th>店铺信息</th><th>首评</th><th>次评</th><th>提交时间</th><th>更新时间</th><th>更新人</th><th>状态</th><th>顾客</th><th>电话</th><th>AppID</th><th>订单ID</th><th>是否退款</th></tr>
         {% for id in results %}
         <tr onmouseover="this.style.backgroundColor='#c4e4ff'" onmouseout="this.style.backgroundColor=''">
-            <td>{{id.shopid}}<br />{{id.creator}}</td>
-            <td>{{id.evaluateid}}</td>
+            <td width="50px">{{id.shopid}}</td>
+            <td width="100px">{{id.creator}}<br />余额：{{id.leftcount}}</td>
             <td><b>{{id.beforerating}}</b><br />{{id.beforecontent}}<br/>评价时间{{id.beforetime|date:"Y-m-d H:i:s" }}<br/>订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</td>
-            <td><b>{{id.afterrating}}</b><br />{{id.aftercontent}}<br/>评价时间{{id.aftertime|date:"Y-m-d H:i:s" }}</td>
-            <td>{{id.createtime|date:"Y-m-d H:i:s" }}</td>
-            <td>{{id.revisetime|date:"Y-m-d H:i:s" }}</td>
-            <td>{{id.reviser}}</td>
-            <td width="50px">{{id.isrevise}}</td>
-            <td>{{id.buyer}}</td>
+            {% if id.isrevise == "已提交" %}            
+                <td><b>{{id.afterrating}}</b><br />{{id.aftercontent}}<br/>评价时间{{id.aftertime|date:"Y-m-d H:i:s" }}<br/><button id="activebutton" onclick="success(this)">成功扣费</button>  <button id="activebutton" onclick="fail(this)">失败</button>  <button id="activebutton" onclick="passit(this)">成功不扣费</button></td>
+            {% else %}
+                <td><b>{{id.afterrating}}</b><br />{{id.aftercontent}}<br/>评价时间{{id.aftertime|date:"Y-m-d H:i:s" }}</td>
+            {% endif %}
+            <td width="70px">{{id.createtime|date:"Y-m-d H:i:s" }}</td>
+            <td width="70px">{{id.revisetime|date:"Y-m-d H:i:s" }}</td>
+            <td width="50px">{{id.reviser}}</td>
+            {% if id.isrevise == "已提交" %} 
+                <td width="70px" ><b style="font-size:16px;">{{id.isrevise}}</b></td>
+            {% endif %}
+            {% if id.isrevise == "修改成功" %}
+                <td width="70px" ><b style="font-size:16px;color:green">{{id.isrevise}}</b></td>
+            {% endif %}
+            {% if id.isrevise == "修改失败" %}
+                <td width="70px" ><b style="font-size:16px;color:firebrick">{{id.isrevise}}</b></td>
+            {% endif %}
+            <td class="buyer">{{id.buyer}}</td>
             <td>{{id.phone}}</td>
             <td>{{id.appid}}</td>
             <td>{{id.orderid}}</td>
-            <td>{{id.isrefund}}</td>
+            <td width="50px">{{id.isrefund}}</td>
         </tr>
         {% endfor %}
     </table>
 </body>
 </html>
+
+{% csrf_token %}
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+  window.onbeforeunload = function () {  
+    var scrollPos;  
+    if (typeof window.pageYOffset != 'undefined') {  
+        scrollPos = window.pageYOffset;  
+    }  
+    else if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {  
+        scrollPos = document.documentElement.scrollTop;  
+    }  
+    else if (typeof document.body != 'undefined') {  
+        scrollPos = document.body.scrollTop;  
+    }  
+    document.cookie = "scrollTop=" + scrollPos; //存储滚动条位置到cookies中  
+  }
+  
+  window.onload = function () {  
+    if (document.cookie.match(/scrollTop=([^;]+)(;|$)/) != null) {  
+        var arr = document.cookie.match(/scrollTop=([^;]+)(;|$)/); //cookies中不为空，则读取滚动条位置  
+        document.documentElement.scrollTop = parseInt(arr[1]);  
+        document.body.scrollTop = parseInt(arr[1]);  
+    }  
+  }
+
+  function passit(ele){
+    var shopid = $(ele).parent().prev().prev().prev().text();
+    var phone = $(ele).parent().next().next().next().next().next().next().text();
+    $.post('/process/', {
+      'shopid': shopid,
+      'phone': phone,
+      'process': 3
+    }, function (data) {
+      //获取返回的数据并进行操作
+      if (data.msg === 'ok') {
+        //登录成功
+        location.replace(location.href);
+      } else if (data.msg === 'fail') {
+        $('#errorMsg').show().text('亲！用户名或密码错误！')
+      }
+    })
+  }
+
+  function success(ele){
+    var shopid = $(ele).parent().prev().prev().prev().text();
+    var phone = $(ele).parent().next().next().next().next().next().next().text();
+    $.post('/process/', {
+      'shopid': shopid,
+      'phone': phone,
+      'process': 1
+    }, function (data) {
+      //获取返回的数据并进行操作
+      if (data.msg === 'ok') {
+        //登录成功
+        location.replace(location.href);
+      } else if (data.msg === 'fail') {
+        $('#errorMsg').show().text('亲！用户名或密码错误！')
+      }
+    })
+  }
+
+  function fail(ele){
+    var shopid = $(ele).parent().prev().prev().prev().text();
+    var phone = $(ele).parent().next().next().next().next().next().next().text();
+    $.post('/process/', {
+      'shopid': shopid,
+      'phone': phone,
+      'process': 2
+    }, function (data) {
+      //获取返回的数据并进行操作
+      if (data.msg === 'ok') {
+        //登录成功
+        location.reload();
+      } else if (data.msg === 'fail') {
+        $('#errorMsg').show().text('亲！用户名或密码错误！')
+      }
+    })
+  }
+
+</script>
+
+
+<style type="text/css">
+    body{
+        position: relative;
+    }
+    #inform{
+          position:fixed;
+          top: 50px;
+          left: 1200px;
+          max-height: 250px;           /* 设置最大高度，当高度达到此值时出现滚动条 */
+          z-index: 10;
+          background-color: rgb(255, 255, 255);
+          overflow: auto;              /* 自动添加滚动条 */
+          box-shadow:0px 0px 10px #000;   /* 外阴影 */
+          display: none;
+    }
+    #informTable{
+        table-layout:fixed;         /* 用于实现表格td自动换行的部分代码*/
+        width: 325px;
+    }
+
+    #informTable tr td{
+        width: 325px;
+        height:30px;
+        font-size: 16px;
+        font-family: Georgia;
+        color: #555555;
+        word-wrap:break-word;   /*自动换行*/
+        padding: 0 0 0 0;
+    }
+    #informTable tr td:hover{
+        background-color: #D9D9D9;
+    }
+    #inform hr{
+        border:1;
+        width: 325px;
+        margin-bottom: 0px;
+    }
+
+</style>
