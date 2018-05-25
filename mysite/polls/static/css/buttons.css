@@ -1,0 +1,657 @@
+
+.button {
+  color: #666;
+  background-color: #EEE;
+  border-color: #EEE;
+  font-weight: 300;
+  font-size: 16px;
+  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-decoration: none;
+  text-align: center;
+  line-height: 40px;
+  height: 40px;
+  padding: 0 40px;
+  margin: 0;
+  display: inline-block;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transition-property: all;
+          transition-property: all;
+  -webkit-transition-duration: .3s;
+          transition-duration: .3s;
+  /*
+  * Disabled State
+  *
+  * The disabled state uses the class .disabled, is-disabled,
+  * and the form attribute disabled="disabled".
+  * The use of !important is only added because this is a state
+  * that must be applied to all buttons when in a disabled state.
+  */ }
+  .button:visited {
+    color: #666; }
+  .button:hover, .button:focus {
+    background-color: #f6f6f6;
+    text-decoration: none;
+    outline: none; }
+  .button:active, .button.active, .button.is-active {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    background-color: #eeeeee;
+    border-color: #cfcfcf;
+    color: #d4d4d4;
+    -webkit-transition-duration: 0s;
+            transition-duration: 0s;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); }
+  .button.disabled, .button.is-disabled, .button:disabled {
+    top: 0 !important;
+    background: #EEE !important;
+    border: 1px solid #DDD !important;
+    text-shadow: 0 1px 1px white !important;
+    color: #CCC !important;
+    cursor: default !important;
+    appearance: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    opacity: .8 !important; }
+
+/*
+* Base Button Tyography
+*
+*/
+.button-uppercase {
+  text-transform: uppercase; }
+
+.button-lowercase {
+  text-transform: lowercase; }
+
+.button-capitalize {
+  text-transform: capitalize; }
+
+.button-small-caps {
+  font-variant: small-caps; }
+
+.button-icon-txt-large {
+  font-size: 36px !important; }
+
+/*
+* Base padding
+*
+*/
+.button-width-small {
+  padding: 0 10px !important; }
+
+/*
+* Base Colors
+*
+* Create colors for buttons
+* (.button-primary, .button-secondary, etc.)
+*/
+.button-primary,
+.button-primary-flat {
+  background-color: #1B9AF7;
+  border-color: #1B9AF7;
+  color: #FFF; }
+  .button-primary:visited,
+  .button-primary-flat:visited {
+    color: #FFF; }
+  .button-primary:hover, .button-primary:focus,
+  .button-primary-flat:hover,
+  .button-primary-flat:focus {
+    background-color: #4cb0f9;
+    border-color: #4cb0f9;
+    color: #FFF; }
+  .button-primary:active, .button-primary.active, .button-primary.is-active,
+  .button-primary-flat:active,
+  .button-primary-flat.active,
+  .button-primary-flat.is-active {
+    background-color: #2798eb;
+    border-color: #2798eb;
+    color: #0880d7; }
+
+.button-plain,
+.button-plain-flat {
+  background-color: #FFF;
+  border-color: #FFF;
+  color: #1B9AF7; }
+  .button-plain:visited,
+  .button-plain-flat:visited {
+    color: #1B9AF7; }
+  .button-plain:hover, .button-plain:focus,
+  .button-plain-flat:hover,
+  .button-plain-flat:focus {
+    background-color: white;
+    border-color: white;
+    color: #1B9AF7; }
+  .button-plain:active, .button-plain.active, .button-plain.is-active,
+  .button-plain-flat:active,
+  .button-plain-flat.active,
+  .button-plain-flat.is-active {
+    background-color: white;
+    border-color: white;
+    color: #e6e6e6; }
+
+.button-inverse,
+.button-inverse-flat {
+  background-color: #222;
+  border-color: #222;
+  color: #EEE; }
+  .button-inverse:visited,
+  .button-inverse-flat:visited {
+    color: #EEE; }
+  .button-inverse:hover, .button-inverse:focus,
+  .button-inverse-flat:hover,
+  .button-inverse-flat:focus {
+    background-color: #3c3c3c;
+    border-color: #3c3c3c;
+    color: #EEE; }
+  .button-inverse:active, .button-inverse.active, .button-inverse.is-active,
+  .button-inverse-flat:active,
+  .button-inverse-flat.active,
+  .button-inverse-flat.is-active {
+    background-color: #222222;
+    border-color: #222222;
+    color: #090909; }
+
+.button-action,
+.button-action-flat {
+  background-color: #A5DE37;
+  border-color: #A5DE37;
+  color: #FFF; }
+  .button-action:visited,
+  .button-action-flat:visited {
+    color: #FFF; }
+  .button-action:hover, .button-action:focus,
+  .button-action-flat:hover,
+  .button-action-flat:focus {
+    background-color: #b9e563;
+    border-color: #b9e563;
+    color: #FFF; }
+  .button-action:active, .button-action.active, .button-action.is-active,
+  .button-action-flat:active,
+  .button-action-flat.active,
+  .button-action-flat.is-active {
+    background-color: #a1d243;
+    border-color: #a1d243;
+    color: #8bc220; }
+
+.button-highlight,
+.button-highlight-flat {
+  background-color: #FEAE1B;
+  border-color: #FEAE1B;
+  color: #FFF; }
+  .button-highlight:visited,
+  .button-highlight-flat:visited {
+    color: #FFF; }
+  .button-highlight:hover, .button-highlight:focus,
+  .button-highlight-flat:hover,
+  .button-highlight-flat:focus {
+    background-color: #fec04e;
+    border-color: #fec04e;
+    color: #FFF; }
+  .button-highlight:active, .button-highlight.active, .button-highlight.is-active,
+  .button-highlight-flat:active,
+  .button-highlight-flat.active,
+  .button-highlight-flat.is-active {
+    background-color: #f3ab26;
+    border-color: #f3ab26;
+    color: #e59501; }
+
+.button-caution,
+.button-caution-flat {
+  background-color: #FF4351;
+  border-color: #FF4351;
+  color: #FFF; }
+  .button-caution:visited,
+  .button-caution-flat:visited {
+    color: #FFF; }
+  .button-caution:hover, .button-caution:focus,
+  .button-caution-flat:hover,
+  .button-caution-flat:focus {
+    background-color: #ff7680;
+    border-color: #ff7680;
+    color: #FFF; }
+  .button-caution:active, .button-caution.active, .button-caution.is-active,
+  .button-caution-flat:active,
+  .button-caution-flat.active,
+  .button-caution-flat.is-active {
+    background-color: #f64c59;
+    border-color: #f64c59;
+    color: #ff1022; }
+
+.button-royal,
+.button-royal-flat {
+  background-color: #7B72E9;
+  border-color: #7B72E9;
+  color: #FFF; }
+  .button-royal:visited,
+  .button-royal-flat:visited {
+    color: #FFF; }
+  .button-royal:hover, .button-royal:focus,
+  .button-royal-flat:hover,
+  .button-royal-flat:focus {
+    background-color: #a49ef0;
+    border-color: #a49ef0;
+    color: #FFF; }
+  .button-royal:active, .button-royal.active, .button-royal.is-active,
+  .button-royal-flat:active,
+  .button-royal-flat.active,
+  .button-royal-flat.is-active {
+    background-color: #827ae1;
+    border-color: #827ae1;
+    color: #5246e2; }
+
+/*
+* Base Layout Styles
+*
+* Very Miminal Layout Styles
+*/
+.button-block,
+.button-stacked {
+  display: block; }
+
+/*
+* Button Types (optional)
+*
+* All of the files below represent the various button
+* types (including shapes & sizes). None of these files
+* are required. Simple remove the uneeded type below and
+* the button type will be excluded from the final build
+*/
+/*
+* Button Shapes
+*
+* This file creates the various button shapes
+* (ex. Circle, Rounded, Pill)
+*/
+.button-square {
+  border-radius: 0; }
+
+.button-box {
+  border-radius: 10px; }
+
+.button-rounded {
+  border-radius: 4px; }
+
+.button-pill {
+  border-radius: 200px; }
+
+.button-circle {
+  border-radius: 100%; }
+
+/*
+* Size Adjustment for equal height & widht buttons
+*
+* Remove padding and set a fixed width.
+*/
+.button-circle,
+.button-box,
+.button-square {
+  padding: 0 !important;
+  width: 40px; }
+  .button-circle.button-giant,
+  .button-box.button-giant,
+  .button-square.button-giant {
+    width: 70px; }
+  .button-circle.button-jumbo,
+  .button-box.button-jumbo,
+  .button-square.button-jumbo {
+    width: 60px; }
+  .button-circle.button-large,
+  .button-box.button-large,
+  .button-square.button-large {
+    width: 50px; }
+  .button-circle.button-normal,
+  .button-box.button-normal,
+  .button-square.button-normal {
+    width: 40px; }
+  .button-circle.button-small,
+  .button-box.button-small,
+  .button-square.button-small {
+    width: 30px; }
+  .button-circle.button-tiny,
+  .button-box.button-tiny,
+  .button-square.button-tiny {
+    width: 24px; }
+
+/*
+* Border Buttons
+*
+* These buttons have no fill they only have a
+* border to define their hit target.
+*/
+.button-border, .button-border-thin, .button-border-thick {
+  background: none;
+  border-width: 2px;
+  border-style: solid;
+  line-height: 36px; }
+  .button-border:hover, .button-border-thin:hover, .button-border-thick:hover {
+    background-color: rgba(255, 255, 255, 0.9); }
+  .button-border:active, .button-border-thin:active, .button-border-thick:active, .button-border.active, .active.button-border-thin, .active.button-border-thick, .button-border.is-active, .is-active.button-border-thin, .is-active.button-border-thick {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    text-shadow: none;
+    -webkit-transition-property: all;
+            transition-property: all;
+    -webkit-transition-duration: .3s;
+            transition-duration: .3s; }
+
+/*
+* Border Optional Sizes
+*
+* A slight variation in border thickness
+*/
+.button-border-thin {
+  border-width: 1px; }
+
+.button-border-thick {
+  border-width: 3px; }
+
+/*
+* Border Button Colors
+*
+* Create colors for buttons
+* (.button-primary, .button-secondary, etc.)
+*/
+.button-border, .button-border-thin, .button-border-thick,
+.button-border-thin,
+.button-border-thick {
+  /*
+  * Border Button Size Adjustment
+  *
+  * The line-height must be adjusted to compinsate for
+  * the width of the border.
+  */ }
+  .button-border.button-primary, .button-primary.button-border-thin, .button-primary.button-border-thick,
+  .button-border-thin.button-primary,
+  .button-border-thick.button-primary {
+    color: #1B9AF7; }
+    .button-border.button-primary:hover, .button-primary.button-border-thin:hover, .button-primary.button-border-thick:hover, .button-border.button-primary:focus, .button-primary.button-border-thin:focus, .button-primary.button-border-thick:focus,
+    .button-border-thin.button-primary:hover,
+    .button-border-thin.button-primary:focus,
+    .button-border-thick.button-primary:hover,
+    .button-border-thick.button-primary:focus {
+      background-color: rgba(76, 176, 249, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-primary:active, .button-primary.button-border-thin:active, .button-primary.button-border-thick:active, .button-border.button-primary.active, .button-primary.active.button-border-thin, .button-primary.active.button-border-thick, .button-border.button-primary.is-active, .button-primary.is-active.button-border-thin, .button-primary.is-active.button-border-thick,
+    .button-border-thin.button-primary:active,
+    .button-border-thin.button-primary.active,
+    .button-border-thin.button-primary.is-active,
+    .button-border-thick.button-primary:active,
+    .button-border-thick.button-primary.active,
+    .button-border-thick.button-primary.is-active {
+      background-color: rgba(39, 152, 235, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-plain, .button-plain.button-border-thin, .button-plain.button-border-thick,
+  .button-border-thin.button-plain,
+  .button-border-thick.button-plain {
+    color: #FFF; }
+    .button-border.button-plain:hover, .button-plain.button-border-thin:hover, .button-plain.button-border-thick:hover, .button-border.button-plain:focus, .button-plain.button-border-thin:focus, .button-plain.button-border-thick:focus,
+    .button-border-thin.button-plain:hover,
+    .button-border-thin.button-plain:focus,
+    .button-border-thick.button-plain:hover,
+    .button-border-thick.button-plain:focus {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: rgba(27, 154, 247, 0.9); }
+    .button-border.button-plain:active, .button-plain.button-border-thin:active, .button-plain.button-border-thick:active, .button-border.button-plain.active, .button-plain.active.button-border-thin, .button-plain.active.button-border-thick, .button-border.button-plain.is-active, .button-plain.is-active.button-border-thin, .button-plain.is-active.button-border-thick,
+    .button-border-thin.button-plain:active,
+    .button-border-thin.button-plain.active,
+    .button-border-thin.button-plain.is-active,
+    .button-border-thick.button-plain:active,
+    .button-border-thick.button-plain.active,
+    .button-border-thick.button-plain.is-active {
+      background-color: rgba(255, 255, 255, 0.7);
+      color: rgba(27, 154, 247, 0.5);
+      opacity: .3; }
+  .button-border.button-inverse, .button-inverse.button-border-thin, .button-inverse.button-border-thick,
+  .button-border-thin.button-inverse,
+  .button-border-thick.button-inverse {
+    color: #222; }
+    .button-border.button-inverse:hover, .button-inverse.button-border-thin:hover, .button-inverse.button-border-thick:hover, .button-border.button-inverse:focus, .button-inverse.button-border-thin:focus, .button-inverse.button-border-thick:focus,
+    .button-border-thin.button-inverse:hover,
+    .button-border-thin.button-inverse:focus,
+    .button-border-thick.button-inverse:hover,
+    .button-border-thick.button-inverse:focus {
+      background-color: rgba(60, 60, 60, 0.9);
+      color: rgba(238, 238, 238, 0.9); }
+    .button-border.button-inverse:active, .button-inverse.button-border-thin:active, .button-inverse.button-border-thick:active, .button-border.button-inverse.active, .button-inverse.active.button-border-thin, .button-inverse.active.button-border-thick, .button-border.button-inverse.is-active, .button-inverse.is-active.button-border-thin, .button-inverse.is-active.button-border-thick,
+    .button-border-thin.button-inverse:active,
+    .button-border-thin.button-inverse.active,
+    .button-border-thin.button-inverse.is-active,
+    .button-border-thick.button-inverse:active,
+    .button-border-thick.button-inverse.active,
+    .button-border-thick.button-inverse.is-active {
+      background-color: rgba(34, 34, 34, 0.7);
+      color: rgba(238, 238, 238, 0.5);
+      opacity: .3; }
+  .button-border.button-action, .button-action.button-border-thin, .button-action.button-border-thick,
+  .button-border-thin.button-action,
+  .button-border-thick.button-action {
+    color: #A5DE37; }
+    .button-border.button-action:hover, .button-action.button-border-thin:hover, .button-action.button-border-thick:hover, .button-border.button-action:focus, .button-action.button-border-thin:focus, .button-action.button-border-thick:focus,
+    .button-border-thin.button-action:hover,
+    .button-border-thin.button-action:focus,
+    .button-border-thick.button-action:hover,
+    .button-border-thick.button-action:focus {
+      background-color: rgba(185, 229, 99, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-action:active, .button-action.button-border-thin:active, .button-action.button-border-thick:active, .button-border.button-action.active, .button-action.active.button-border-thin, .button-action.active.button-border-thick, .button-border.button-action.is-active, .button-action.is-active.button-border-thin, .button-action.is-active.button-border-thick,
+    .button-border-thin.button-action:active,
+    .button-border-thin.button-action.active,
+    .button-border-thin.button-action.is-active,
+    .button-border-thick.button-action:active,
+    .button-border-thick.button-action.active,
+    .button-border-thick.button-action.is-active {
+      background-color: rgba(161, 210, 67, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-highlight, .button-highlight.button-border-thin, .button-highlight.button-border-thick,
+  .button-border-thin.button-highlight,
+  .button-border-thick.button-highlight {
+    color: #FEAE1B; }
+    .button-border.button-highlight:hover, .button-highlight.button-border-thin:hover, .button-highlight.button-border-thick:hover, .button-border.button-highlight:focus, .button-highlight.button-border-thin:focus, .button-highlight.button-border-thick:focus,
+    .button-border-thin.button-highlight:hover,
+    .button-border-thin.button-highlight:focus,
+    .button-border-thick.button-highlight:hover,
+    .button-border-thick.button-highlight:focus {
+      background-color: rgba(254, 192, 78, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-highlight:active, .button-highlight.button-border-thin:active, .button-highlight.button-border-thick:active, .button-border.button-highlight.active, .button-highlight.active.button-border-thin, .button-highlight.active.button-border-thick, .button-border.button-highlight.is-active, .button-highlight.is-active.button-border-thin, .button-highlight.is-active.button-border-thick,
+    .button-border-thin.button-highlight:active,
+    .button-border-thin.button-highlight.active,
+    .button-border-thin.button-highlight.is-active,
+    .button-border-thick.button-highlight:active,
+    .button-border-thick.button-highlight.active,
+    .button-border-thick.button-highlight.is-active {
+      background-color: rgba(243, 171, 38, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-caution, .button-caution.button-border-thin, .button-caution.button-border-thick,
+  .button-border-thin.button-caution,
+  .button-border-thick.button-caution {
+    color: #FF4351; }
+    .button-border.button-caution:hover, .button-caution.button-border-thin:hover, .button-caution.button-border-thick:hover, .button-border.button-caution:focus, .button-caution.button-border-thin:focus, .button-caution.button-border-thick:focus,
+    .button-border-thin.button-caution:hover,
+    .button-border-thin.button-caution:focus,
+    .button-border-thick.button-caution:hover,
+    .button-border-thick.button-caution:focus {
+      background-color: rgba(255, 118, 128, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-caution:active, .button-caution.button-border-thin:active, .button-caution.button-border-thick:active, .button-border.button-caution.active, .button-caution.active.button-border-thin, .button-caution.active.button-border-thick, .button-border.button-caution.is-active, .button-caution.is-active.button-border-thin, .button-caution.is-active.button-border-thick,
+    .button-border-thin.button-caution:active,
+    .button-border-thin.button-caution.active,
+    .button-border-thin.button-caution.is-active,
+    .button-border-thick.button-caution:active,
+    .button-border-thick.button-caution.active,
+    .button-border-thick.button-caution.is-active {
+      background-color: rgba(246, 76, 89, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-royal, .button-royal.button-border-thin, .button-royal.button-border-thick,
+  .button-border-thin.button-royal,
+  .button-border-thick.button-royal {
+    color: #7B72E9; }
+    .button-border.button-royal:hover, .button-royal.button-border-thin:hover, .button-royal.button-border-thick:hover, .button-border.button-royal:focus, .button-royal.button-border-thin:focus, .button-royal.button-border-thick:focus,
+    .button-border-thin.button-royal:hover,
+    .button-border-thin.button-royal:focus,
+    .button-border-thick.button-royal:hover,
+    .button-border-thick.button-royal:focus {
+      background-color: rgba(164, 158, 240, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-royal:active, .button-royal.button-border-thin:active, .button-royal.button-border-thick:active, .button-border.button-royal.active, .button-royal.active.button-border-thin, .button-royal.active.button-border-thick, .button-border.button-royal.is-active, .button-royal.is-active.button-border-thin, .button-royal.is-active.button-border-thick,
+    .button-border-thin.button-royal:active,
+    .button-border-thin.button-royal.active,
+    .button-border-thin.button-royal.is-active,
+    .button-border-thick.button-royal:active,
+    .button-border-thick.button-royal.active,
+    .button-border-thick.button-royal.is-active {
+      background-color: rgba(130, 122, 225, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-giant, .button-giant.button-border-thin, .button-giant.button-border-thick,
+  .button-border-thin.button-giant,
+  .button-border-thick.button-giant {
+    line-height: 66px; }
+  .button-border.button-jumbo, .button-jumbo.button-border-thin, .button-jumbo.button-border-thick,
+  .button-border-thin.button-jumbo,
+  .button-border-thick.button-jumbo {
+    line-height: 56px; }
+  .button-border.button-large, .button-large.button-border-thin, .button-large.button-border-thick,
+  .button-border-thin.button-large,
+  .button-border-thick.button-large {
+    line-height: 46px; }
+  .button-border.button-normal, .button-normal.button-border-thin, .button-normal.button-border-thick,
+  .button-border-thin.button-normal,
+  .button-border-thick.button-normal {
+    line-height: 36px; }
+  .button-border.button-small, .button-small.button-border-thin, .button-small.button-border-thick,
+  .button-border-thin.button-small,
+  .button-border-thick.button-small {
+    line-height: 26px; }
+  .button-border.button-tiny, .button-tiny.button-border-thin, .button-tiny.button-border-thick,
+  .button-border-thin.button-tiny,
+  .button-border-thick.button-tiny {
+    line-height: 20px; }
+
+/*
+* Border Buttons
+*
+* These buttons have no fill they only have a
+* border to define their hit target.
+*/
+.button-borderless {
+  background: none;
+  border: none;
+  padding: 0 8px !important;
+  color: #EEE;
+  font-size: 20.8px;
+  font-weight: 200;
+  /*
+  * Borderless Button Colors
+  *
+  * Create colors for buttons
+  * (.button-primary, .button-secondary, etc.)
+  */
+  /*
+  * Borderles Size Adjustment
+  *
+  * The font-size must be large to compinsate for
+  * the lack of a hit target.
+  */ }
+  .button-borderless:hover, .button-borderless:focus {
+    background: none; }
+  .button-borderless:active, .button-borderless.active, .button-borderless.is-active {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    text-shadow: none;
+    -webkit-transition-property: all;
+            transition-property: all;
+    -webkit-transition-duration: .3s;
+            transition-duration: .3s;
+    opacity: .3; }
+  .button-borderless.button-primary {
+    color: #1B9AF7; }
+  .button-borderless.button-plain {
+    color: #FFF; }
+  .button-borderless.button-inverse {
+    color: #222; }
+  .button-borderless.button-action {
+    color: #A5DE37; }
+  .button-borderless.button-highlight {
+    color: #FEAE1B; }
+  .button-borderless.button-caution {
+    color: #FF4351; }
+  .button-borderless.button-royal {
+    color: #7B72E9; }
+  .button-borderless.button-giant {
+    font-size: 36.4px;
+    height: 52.4px;
+    line-height: 52.4px; }
+  .button-borderless.button-jumbo {
+    font-size: 31.2px;
+    height: 47.2px;
+    line-height: 47.2px; }
+  .button-borderless.button-large {
+    font-size: 26px;
+    height: 42px;
+    line-height: 42px; }
+  .button-borderless.button-normal {
+    font-size: 20.8px;
+    height: 36.8px;
+    line-height: 36.8px; }
+  .button-borderless.button-small {
+    font-size: 15.6px;
+    height: 31.6px;
+    line-height: 31.6px; }
+  .button-borderless.button-tiny {
+    font-size: 12.48px;
+    height: 28.48px;
+    line-height: 28.48px; }
+
+
+/*
+* Button Sizes
+*
+* This file creates the various button sizes
+* (ex. .button-large, .button-small, etc.)
+*/
+.button-giant {
+  font-size: 28px;
+  height: 70px;
+  line-height: 70px;
+  padding: 0 70px; }
+
+.button-jumbo {
+  font-size: 24px;
+  height: 60px;
+  line-height: 60px;
+  padding: 0 60px; }
+
+.button-large {
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px; }
+
+.button-normal {
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 40px; }
+
+.button-small {
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 30px; }
+
+.button-tiny {
+  font-size: 9.6px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 10px; }

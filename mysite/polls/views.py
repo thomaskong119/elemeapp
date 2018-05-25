@@ -55,7 +55,22 @@ def index(request):
             row12 = "修改成功"
         else:
             row12 = "修改失败"
-        table.append({'shopid':row[1],'evaluateid':row[2],'beforerating':row[4],'beforecontent':row[5],'afterrating':row[6],'aftercontent':row[7],'createtime':row[8],'revisetime':row[9],'creator':row[10],'reviser':row[11],'isrevise':row12,'buyer':row[13],'phone':row[14],'beforetime':row[15],'aftertime':row[17],'ordertime':row[20],'appid':row[21],'orderid':row[22],'isrefund':row[23],'leftcount':row[24]})
+        
+        if row[6] == None:
+            row6 = " "
+        else:
+            row6 = row[6]
+        
+        if row[7] == None:
+            row7 = " "
+        else:
+            row7 = row[7]
+
+        if row[11] == None:
+            row11 = " "
+        else:
+            row11 = row[11]
+        table.append({'shopid':row[1],'evaluateid':row[2],'beforerating':row[4],'beforecontent':row[5],'afterrating':row6,'aftercontent':row7,'createtime':row[8],'revisetime':row[9],'creator':row[10],'reviser':row11,'isrevise':row12,'buyer':row[13],'phone':row[14],'beforetime':row[15],'aftertime':row[17],'ordertime':row[20],'appid':row[21],'orderid':row[22],'isrefund':row[23],'leftcount':row[24]})
     dbconn.close()
     cursor.close()
     return render(request, 'polls/index.html',{'results':table})

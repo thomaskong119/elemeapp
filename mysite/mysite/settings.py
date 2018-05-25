@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 import socket
 
-if socket.gethostname() == 'ThomasKONGPC':
-    DEBUG = True
-else:
-    DEBUG = TEMPLATE_DEBUG = False
+# if socket.gethostname() == 'ThomasKONGPC':
+#     DEBUG = True
+# else:
+#     DEBUG = TEMPLATE_DEBUG = False
+
+DEBUG = True
 
 ADMINS = (
     ('Thomas Kong', 'thomaskong119@hotmail.com'),
@@ -36,7 +38,11 @@ SECRET_KEY = '2nk^q_x9)&681qdwrlps*#drtxs)*+05s9hdot^l3fs5r^@5&+'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost','123.206.62.70']
 
-
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+]
 # Application definition
 
 INSTALLED_APPS = [
