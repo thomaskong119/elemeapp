@@ -5,7 +5,7 @@ body {
   font-weight: 400;
   color: #3b3b3b;
   -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
+  /* font-smoothing: antialiased; */
   background: #2b2b2b;
 }
 
@@ -19,6 +19,12 @@ body {
   margin: 0 0 40px 0;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: table;
+}
+.table.dark {
+  margin: 0 0 40px 0;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
   display: table;
 }
 @media screen and (max-width: 580px) {
@@ -46,6 +52,12 @@ body {
 .row.blue {
   background: #2980b9;
 }
+.row.grey {
+  background: grey;
+}
+.row.dark {
+  background: #2b2b2b;
+}
 @media screen and (max-width: 580px) {
   .row {
     padding: 8px 0;
@@ -56,6 +68,13 @@ body {
 .cell {
   padding: 6px 12px;
   display: table-cell;
+}
+
+.cellhead {
+  display: table-cell;
+  padding:5px; 
+  text-align: center;
+  width: 15%;
 }
 
 .cell70{
@@ -74,6 +93,17 @@ body {
   padding: 6px 12px;
   display: table-cell;
   width: 100px;
+}
+
+.cell250{
+  padding: 6px 12px;
+  display: table-cell;
+  width: 250px;
+}
+
+.textbig{
+  font-size: 40px;
+  text-align: center;
 }
 @media screen and (max-width: 580px) {
   .cell {

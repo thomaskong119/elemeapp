@@ -14,9 +14,14 @@
 </head>
 <body>
     <div class="wrapper">
+      <div class = "table dark">
+        <div class="row header dark">
+          <div class="cellhead"><b class ="textbig">{{remaincount}}</b><br/>待修改</div><div class="cellhead"><b class ="textbig">{{successcount}}</b><br/>修改成功</div><div class="cellhead"><b class ="textbig">{{failcount}}</b><br/>修改失败</div>
+        </div>
+        </div>
         <div class="table">
-          <div class="row header">
-            <div class="cell50">店铺ID</div><div class="cell100">店铺信息</div><div class="cell">首评</div><div class="cell">次评</div><div class="cell70">提交时间</div><div class="cell70">更新时间</div><div class="cell70">状态</div><div class="cell70">顾客</div><div class="cell">电话</div><div class="cell">AppID</div><div class="cell">订单信息</div>
+          <div class="row header blue">
+            <div class="cell50">店铺ID</div><div class="cell100">店铺信息</div><div class="cell">首评</div><div class="cell250">次评</div><div class="cell70">提交时间</div><div class="cell70">更新时间</div><div class="cell70">状态</div><div class="cell70">顾客</div><div class="cell">电话</div><div class="cell">AppID</div><div class="cell">订单信息</div>
           </div>
 
           {% for id in results %}

@@ -13,7 +13,7 @@ password="Sthg123456"
 port=3306
 charset='utf8'
 
-sqlcmd="SELECT a.*,b.left_counter FROM t_ea_evaluate_revise_detial as a, t_ea_evaluate_revise as b where TO_DAYS(a.order_time) > TO_DAYS(NOW())-15 and a.shop_id = b.shop_id order by a.create_time desc;"
+sqlcmd="SELECT a.*,b.left_counter FROM t_ea_evaluate_revise_detial as a, t_ea_evaluate_revise as b where TO_DAYS(a.order_time) > TO_DAYS(NOW())-10 and a.shop_id = b.shop_id order by a.create_time desc;"
 
 @csrf_exempt
 def process(request):
@@ -71,7 +71,15 @@ def index(request):
         else:
             row11 = row[11]
         table.append({'shopid':row[1],'evaluateid':row[2],'beforerating':row[4],'beforecontent':row[5],'afterrating':row6,'aftercontent':row7,'createtime':row[8],'revisetime':row[9],'creator':row[10],'reviser':row11,'isrevise':row12,'buyer':row[13],'phone':row[14],'beforetime':row[15],'aftertime':row[17],'ordertime':row[20],'appid':row[21],'orderid':row[22],'isrefund':row[23],'leftcount':row[24]})
+    cursor.execute("SELECT count(id) FROM `t_ea_evaluate_revise_detial` where is_revise=0;")
+    remaincount = cursor.fetchall()
+    cursor.execute("SELECT count(id) FROM `t_ea_evaluate_revise_detial` where is_revise=1;")
+    successcount = cursor.fetchall()
+    cursor.execute("SELECT count(id) FROM `t_ea_evaluate_revise_detial` where is_revise=2;")
+    failcount = cursor.fetchall()
+    print ("Total count :" + str(remaincount[0][0]) + str(successcount[0][0]) + str(failcount[0][0]))
+
     dbconn.close()
     cursor.close()
-    return render(request, 'polls/index.html',{'results':table})
+    return render(request, 'polls/index.html',{'results':table,'remaincount':remaincount[0][0],'successcount':successcount[0][0],'failcount':failcount[0][0]})
     
