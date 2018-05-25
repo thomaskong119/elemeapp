@@ -16,7 +16,7 @@
     <div class="wrapper">
         <div class="table">
           <div class="row header">
-            <div class="cell50">店铺ID</div><div class="cell100">店铺信息</div><div class="cell">首评</div><div class="cell">次评</div><div class="cell70">提交时间</div><div class="cell70">更新时间</div><div class="cell70">状态</div><div class="cell">顾客信息</div><div class="cell">AppID</div><div class="cell">订单信息</div>
+            <div class="cell50">店铺ID</div><div class="cell100">店铺信息</div><div class="cell">首评</div><div class="cell">次评</div><div class="cell70">提交时间</div><div class="cell70">更新时间</div><div class="cell70">状态</div><div class="cell70">顾客</div><div class="cell">电话</div><div class="cell">AppID</div><div class="cell">订单信息</div>
           </div>
 
           {% for id in results %}
@@ -40,7 +40,8 @@
               {% if id.isrevise == "修改失败" %}
               <div class="cell70"><b style="font-size:16px;color:#FF4351">{{id.isrevise}}</b></div>
               {% endif %}
-              <div class="cell">{{id.buyer}}<br/>{{id.phone}}</div>
+              <div class="cell">{{id.buyer}}</div>
+              <div class="cell">{{id.phone}}</div>
               <div class="cell">{{id.appid}}</div>
               {% if id.isrefund == 0 %}
               <div class="cell">{{id.orderid}}<br/>未退款<br/>订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</div>
@@ -82,7 +83,7 @@
 
   function passit(ele){
     var shopid = $(ele).parent().prev().prev().prev().text();
-    var phone = $(ele).parent().next().next().next().next().next().next().text();
+    var phone = $(ele).parent().next().next().next().next().next().text();
     $.post('/process/', {
       'shopid': shopid,
       'phone': phone,
@@ -100,7 +101,7 @@
 
   function success(ele){
     var shopid = $(ele).parent().prev().prev().prev().text();
-    var phone = $(ele).parent().next().next().next().next().next().next().text();
+    var phone = $(ele).parent().next().next().next().next().next().text();
     $.post('/process/', {
       'shopid': shopid,
       'phone': phone,
@@ -118,7 +119,7 @@
 
   function fail(ele){
     var shopid = $(ele).parent().prev().prev().prev().text();
-    var phone = $(ele).parent().next().next().next().next().next().next().text();
+    var phone = $(ele).parent().next().next().next().next().next().text();
     $.post('/process/', {
       'shopid': shopid,
       'phone': phone,
