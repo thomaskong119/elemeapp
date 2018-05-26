@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
     {% load static %}
@@ -48,11 +47,22 @@
               <div class="cell">{{id.buyer}}</div>
               <div class="cell">{{id.phone}}</div>
               <div class="cell">{{id.appid}}</div>
-              {% if id.isrefund == 0 %}
-              <div class="cell">{{id.orderid}}<br/>未退款<br/>订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</div>
-              {% else %}
-              <div class="cell">{{id.orderid}}<br/><b style="font-size:12px;color:#FF4351">已退款</b><br/>订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</div>
-              {% endif %}
+              <div class="cell">
+                {% if id.isrefund == 0 %}
+                {{id.orderid}}<br/>未退款<br/>
+                  {% if id.expired == True %}
+                  <b style="font-size:12px;color:#FF4351">订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</b>
+                  {% else %}
+                  订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}
+                  {% endif %}
+                {% else %}
+                {{id.orderid}}<br/><b style="font-size:12px;color:#FF4351">已退款</b><br/>
+                  {% if id.expired == True %}
+                  <b style="font-size:12px;color:#FF4351">订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</b>
+                  {% else %}
+                  订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}
+                  {% endif %}
+                {% endif %}</div>
             </div>
             {% endfor %}
           </div>

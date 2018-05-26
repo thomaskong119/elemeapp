@@ -5,6 +5,8 @@ import json
 import sys
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from datetime import datetime
+from datetime import timedelta
 
 host="rm-2zeqp0878qi2f6xlnrw.mysql.rds.aliyuncs.com"
 database="ele_message"
@@ -70,7 +72,12 @@ def index(request):
             row11 = " "
         else:
             row11 = row[11]
-        table.append({'shopid':row[1],'evaluateid':row[2],'beforerating':row[4],'beforecontent':row[5],'afterrating':row6,'aftercontent':row7,'createtime':row[8],'revisetime':row[9],'creator':row[10],'reviser':row11,'isrevise':row12,'buyer':row[13],'phone':row[14],'beforetime':row[15],'aftertime':row[17],'ordertime':row[20],'appid':row[21],'orderid':row[22],'isrefund':row[23],'leftcount':row[24]})
+        
+        if row[20] > datetime.now() - timedelta(days=7):
+            expired = False
+        else:
+            expired = True
+        table.append({'shopid':row[1],'evaluateid':row[2],'beforerating':row[4],'beforecontent':row[5],'afterrating':row6,'aftercontent':row7,'createtime':row[8],'revisetime':row[9],'creator':row[10],'reviser':row11,'isrevise':row12,'buyer':row[13],'phone':row[14],'beforetime':row[15],'aftertime':row[17],'ordertime':row[20],'appid':row[21],'orderid':row[22],'isrefund':row[23],'leftcount':row[24],'expired':expired})
     cursor.execute("SELECT count(id) FROM `t_ea_evaluate_revise_detial` where is_revise=0;")
     remaincount = cursor.fetchall()
     cursor.execute("SELECT count(id) FROM `t_ea_evaluate_revise_detial` where is_revise=1;")
