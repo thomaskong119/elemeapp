@@ -1,4 +1,4 @@
-#coding=utf-8
+# -*- coding: utf-8 -*- 
 import urllib.request
 import json
 from pprint import pprint
@@ -70,7 +70,7 @@ def query(request):
     elif request == "cjjp":
         tempid = cjjpid
     
-    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":900,"serviceNO":tempid}}
+    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":950,"serviceNO":tempid}}
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(url, data=params, headers=header)
     try:
@@ -90,7 +90,10 @@ def query(request):
             d = datetime.now() - timedelta(days=900)
             if t1 > d:
                 if ("i**1" in d1[index]['valuator']) | ("i**2" in d1[index]['valuator']) | ("i**v" in d1[index]['valuator']):
-                    pass
+                    filetext += "\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+" "+ str(d1[index]['createTime'])
+                    count += 1
+                    scoresum += int(d1[index]['compositionalScore'])
+                    # pass
                 else:
                     filetext += "\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+" "+ str(d1[index]['createTime'])
                     count += 1
