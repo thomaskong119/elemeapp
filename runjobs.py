@@ -1,3 +1,4 @@
+#coding=utf-8
 import urllib.request
 import urllib.response
 import json
@@ -224,8 +225,8 @@ def jobsendPostDing():
     for index in range(len(d1)):
         ordertemp[index] = int(d1[index]['orderCount']) - orderlast[index]
         orderlast[index] = int(d1[index]['orderCount'])
-        content += (d1[index]['serviceName'] + str(d1[index]['orderCount'])+ "/" +str(ordertemp[index]) + "\n")
-        file_object.write(d1[index]['serviceName'] + str(d1[index]['orderCount']) + "/" +str(ordertemp[index]) + "\n")
+        content += (str(d1[index]['serviceName']) + str(d1[index]['orderCount'])+ "/" +str(ordertemp[index]) + "\n")
+        file_object.write(str(d1[index]['serviceName']) + str(d1[index]['orderCount']) + "/" +str(ordertemp[index]) + "\n")
 
     file_object.write(str(datetime.now())+"\n===========================================\n")
     file_object.close()
@@ -246,13 +247,13 @@ def jobsendPostDing():
     json_str = json.dumps(dingdata).encode('utf8')
     dingreq = urllib.request.Request(dingurl, data=json_str, headers= header)
 
-    appid = '22547'
-    to = '18511067574'
-    signature = 'dded839a7db21a859155793987c46c85'
-    submaildata = 'appid='+appid+'&to='+to+'&content=【小评果】'+content+'退订回N &signature='+signature
-    submailurl = 'https://api.mysubmail.com/message/send.json'
-    submailparam = submaildata.encode('utf8')
-    subreq = urllib.request.Request(submailurl, data=submailparam)
+    # appid = '22547'
+    # to = '18511067574'
+    # signature = 'dded839a7db21a859155793987c46c85'
+    # submaildata = 'appid='+appid+'&to='+to+'&content=【小评果】'+content+'退订回N &signature='+signature
+    # submailurl = 'https://api.mysubmail.com/message/send.json'
+    # submailparam = submaildata.encode('utf8')
+    # subreq = urllib.request.Request(submailurl, data=submailparam)
     if int(datetime.now().hour) in range(0,8):
         print (str(datetime.now().hour)+" Pass" + "\n--sendPostDing")
     elif test ==0:

@@ -20,7 +20,7 @@
         </div>
         <div class="table">
           <div class="row header blue">
-            <div class="cell50">店铺ID</div><div class="cell100">店铺信息</div><div class="cell">首评</div><div class="cell250">次评</div><div class="cell70">提交时间</div><div class="cell70">更新时间</div><div class="cell70">状态</div><div class="cell70">顾客</div><div class="cell">电话</div><div class="cell">AppID</div><div class="cell">订单信息</div>
+            <div class="cell50">店铺ID</div><div class="cell100">店铺信息</div><div class="cell">首评</div><div class="cell250">次评</div><div class="cell70">提交时间</div><div class="cell70">更新时间</div><div class="cell70">状态</div><div class="cell70">顾客</div><div class="cell">电话</div><div class="cell">订单ID</div><div class="cell">订单信息</div>
           </div>
 
           {% for id in results %}
@@ -46,17 +46,17 @@
               {% endif %}
               <div class="cell">{{id.buyer}}</div>
               <div class="cell">{{id.phone}}</div>
-              <div class="cell">{{id.appid}}</div>
+              <div class="cell">{{id.orderid}}</div>
               <div class="cell">
                 {% if id.isrefund == 0 %}
-                {{id.orderid}}<br/>未退款<br/>
+                {{id.appid}}<br/>未退款<br/>
                   {% if id.expired == True %}
                   <b style="font-size:12px;color:#FF4351">订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</b>
                   {% else %}
                   订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}
                   {% endif %}
                 {% else %}
-                {{id.orderid}}<br/><b style="font-size:12px;color:#FF4351">已退款</b><br/>
+                {{id.appid}}<br/><b style="font-size:12px;color:#FF4351">已退款</b><br/>
                   {% if id.expired == True %}
                   <b style="font-size:12px;color:#FF4351">订单时间{{id.ordertime|date:"Y-m-d H:i:s" }}</b>
                   {% else %}
@@ -99,9 +99,11 @@
   function passit(ele){
     var shopid = $(ele).parent().prev().prev().prev().text();
     var phone = $(ele).parent().next().next().next().next().next().text();
+    var orderid = $(ele).parent().next().next().next().next().next().next().text();
     $.post('/process/', {
       'shopid': shopid,
       'phone': phone,
+      'orderid': orderid,
       'process': 3
     }, function (data) {
       //获取返回的数据并进行操作
@@ -117,9 +119,11 @@
   function success(ele){
     var shopid = $(ele).parent().prev().prev().prev().text();
     var phone = $(ele).parent().next().next().next().next().next().text();
+    var orderid = $(ele).parent().next().next().next().next().next().next().text();
     $.post('/process/', {
       'shopid': shopid,
       'phone': phone,
+      'orderid': orderid,
       'process': 1
     }, function (data) {
       //获取返回的数据并进行操作
@@ -135,9 +139,11 @@
   function fail(ele){
     var shopid = $(ele).parent().prev().prev().prev().text();
     var phone = $(ele).parent().next().next().next().next().next().text();
+    var orderid = $(ele).parent().next().next().next().next().next().next().text();
     $.post('/process/', {
       'shopid': shopid,
       'phone': phone,
+      'orderid': orderid,
       'process': 2
     }, function (data) {
       //获取返回的数据并进行操作

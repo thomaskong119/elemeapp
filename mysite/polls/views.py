@@ -23,16 +23,17 @@ def process(request):
     cursor = dbconn.cursor()
     shopid = request.POST.get('shopid')
     phone = request.POST.get('phone')
+    orderid = request.POST.get('orderid')
     process = int(request.POST.get('process'))
     try:
         if process == 1:
-            cursor.execute("UPDATE t_ea_evaluate_revise_detial set is_revise=1 where shop_id = " + shopid +" and phones like '%" + phone + "%';UPDATE t_ea_evaluate_revise SET left_counter = left_counter - 1 where shop_id= "+shopid +";")
+            cursor.execute("UPDATE t_ea_evaluate_revise_detial set is_revise=1 where shop_id = " + shopid +" and phones like '%" + phone + "%' and order_id =" +orderid+";UPDATE t_ea_evaluate_revise SET left_counter = left_counter - 1 where shop_id= "+shopid +";")
             print ("Shopid=" + shopid + " Phone=" + phone + " Success.")
         elif process == 2:
-            cursor.execute("UPDATE t_ea_evaluate_revise_detial set is_revise=2 where shop_id = " + shopid +" and phones like '%" + phone + "%';")
+            cursor.execute("UPDATE t_ea_evaluate_revise_detial set is_revise=2 where shop_id = " + shopid +" and phones like '%" + phone + "%' and order_id =" +orderid+";")
             print ("Shopid=" + shopid + " Phone=" + phone + " Fail.")
         elif process == 3:
-            cursor.execute("UPDATE t_ea_evaluate_revise_detial set is_revise=1 where shop_id = " + shopid +" and phones like '%" + phone + "%';")
+            cursor.execute("UPDATE t_ea_evaluate_revise_detial set is_revise=1 where shop_id = " + shopid +" and phones like '%" + phone + "%' and order_id =" +orderid+";")
             print ("Shopid=" + shopid + " Phone=" + phone + " Passit.")
         dbconn.commit()
     except:
