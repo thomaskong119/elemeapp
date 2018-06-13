@@ -70,63 +70,67 @@ def query(request):
     elif request == "cjjp":
         tempid = cjjpid
     
-    data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NjhhOTRjN2YtYTQwMC00MDE01fGeCEZjBiYz","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":1000,"serviceNO":tempid}}
+    offset = 0
+    limit = 200
+    count = 0
+    scoresum = 0
+    remain = 0
+    filetext = ""
+
+    data = {"id":"008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":offset,"limit":limit,"serviceNO":tempid}}
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(url, data=params, headers=header)
-    try:
+
+    while True:
+        data = {"id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj",
+                                                                                "key": "1.0.0"}, "ncp": "2.0.0", "service": "GadgetzanAPIService", "method": "getAppraisalListByServiceNO", "params": {"offset": offset, "limit": limit, "serviceNO": tempid}}
+        params = json.dumps(data).encode('utf8')
+        req = urllib.request.Request(url, data=params, headers=header)
         res = urllib.request.urlopen(req)
         d1 = json.load(res)
+        if d1['result']['result'] == None:
+            break
+        try:
+            if d1['error']['code'] == 'SERVER_ERROR':
+                print("ServerError, will try again")
+                job()
+        except:
+            pass
+
         d1 = d1['result']['result']
 
-        count = 0
-        scoresum = 0
-        remain = 0
-        filetext = ""
-        
-        # print (d1[0])
-        
         for index in range(len(d1)):
-            t1 = datetime.strptime(d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
+            t1 = datetime.strptime(
+                d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
             d = datetime.now() - timedelta(days=900)
             if t1 > d:
                 if ("i**1" in d1[index]['valuator']) | ("i**2" in d1[index]['valuator']) | ("i**v" in d1[index]['valuator']):
-                    filetext += "\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+" "+ str(d1[index]['createTime'])
+                    filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
+                        d1[index]['compositionalScore'])+" " + str(d1[index]['createTime'])
                     count += 1
                     scoresum += int(d1[index]['compositionalScore'])
                     # pass
                 else:
-                    filetext += "\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+" "+ str(d1[index]['createTime'])
+                    filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
+                        d1[index]['compositionalScore'])+" " + str(d1[index]['createTime'])
                     count += 1
                     scoresum += int(d1[index]['compositionalScore'])
             else:
                 break
 
-        
-        # for index in range(len(d1)):
-        #     t1 = datetime.strptime(d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
-        #     d = datetime.now() - timedelta(days=900)
-        #     if t1 > d:
-        #         file_object.write("\n" + str(d1[index]['orderNO']) +" "+ str(d1[index]['compositionalScore'])+" "+ str(d1[index]['createTime']))
-        #         count += 1
-        #         scoresum += int(d1[index]['compositionalScore'])
-        #     else:
-        #         break
+        offset += limit
 
-        print (count)
-        scorenow = (round_up(scoresum / count*10000))/10000
-        content = "目前评分：" + str(scorenow) + "\n"
-        for score in range(math.ceil(scoresum / count*10), 51, 1):
-            while round_up(scoresum / count)*10 < score:
-                scoresum += 5.0
-                count += 1
-                remain += 1
-            content += "距离" + str(score/10) + "分还差" + str(remain) + "条好评" + "\n"
-
-        return content,count,filetext
-    except:
-        print ("HTTPError, will try again")
-        # file_object.write("HTTPError")
-        job()
+    # print(count)
+    scorenow = (round_up(scoresum / count*10000))/10000
+    content = "目前总共" + str(count) +"条评价\n评分：" + str(scorenow) + "\n"
+    for score in range(math.ceil(scoresum / count*10), 51, 1):
+        while round_up(scoresum / count)*10 < score:
+            scoresum += 5.0
+            count += 1
+            remain += 1
+        content += "距离" + str(score/10) + "分还差" + \
+            str(remain) + "条好评" + "\n"
+    return content, count, filetext
 
 def round_up(value):     
       return round(value * 10) / 10.0
