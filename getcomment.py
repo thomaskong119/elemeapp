@@ -46,7 +46,7 @@ def jobgetcomment():
         elif service == sqid:
             tempname = sqname
 
-        data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"ZTliYTJiMDgtOGQ5NC00NWZk1fJYcQYWZlOT","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":5,"serviceNO":service}}
+        data = {"id":"2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":0,"limit":5,"serviceNO":service}}
 
         params = json.dumps(data).encode('utf8')
         req = urllib.request.Request(urlcomment, data=params, headers=header)
@@ -59,6 +59,7 @@ def jobgetcomment():
             print ("Error, will try again")
             jobgetcomment()
         except TypeError:
+            print ("TypeError")
             pass
         else:
             for index in range(5):
