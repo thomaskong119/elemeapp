@@ -54,7 +54,7 @@ def jobgetcomment():
         elif service == sqid:
             tempname = sqname
 
-        data = {"id": "2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj",
+        data = {"id": "2C0DE4DBA2E8400DBCCF8AE4F779CCF2|1526630263938", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG",
                                                                                   "key": "1.0.0"}, "ncp": "2.0.0", "service": "GadgetzanAPIService", "method": "getAppraisalListByServiceNO", "params": {"offset": 0, "limit": 5, "serviceNO": service}}
 
         params = json.dumps(data).encode('utf8')
@@ -184,7 +184,7 @@ def query(request):
     # flag = 1
 
     while True:
-        data = {"id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj",
+        data = {"id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG",
                                                                                 "key": "1.0.0"}, "ncp": "2.0.0", "service": "GadgetzanAPIService", "method": "getAppraisalListByServiceNO", "params": {"offset": offset, "limit": limit, "serviceNO": tempid}}
         params = json.dumps(data).encode('utf8')
         req = urllib.request.Request(urlcomment, data=params, headers=header)
@@ -239,7 +239,7 @@ def query(request):
 
 def jobsendPostDing():
 
-    data = {"id": "E8EA1587AC8040F29AF64EC30294E399|1528683065007", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj",
+    data = {"id": "E8EA1587AC8040F29AF64EC30294E399|1528683065007", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG",
                                                                               "key": "1.0.0"}, "ncp": "2.0.0", "service": "ClassifyService", "method": "getServicesByClassifyCode", "params": {"classifyCode": "1", "offset": 0, "limit": 99}}
 
     file_object = open('ordercount.txt', 'a')
@@ -249,18 +249,19 @@ def jobsendPostDing():
     res = urllib.request.urlopen(req)
 
     d1 = json.load(res)
-    d1 = d1['result']['result']
-
-    content = ''
-
-    for index in range(len(d1)):
-        ordertemp[index] = int(d1[index]['orderCount']) - orderlast[index]
-        orderlast[index] = int(d1[index]['orderCount'])
-        content += (str(d1[index]['serviceName']) + str(d1[index]
-                                                        ['orderCount']) + "/" + str(ordertemp[index]) + "\n")
-        file_object.write(str(d1[index]['serviceName']) + str(d1[index]
-                                                              ['orderCount']) + "/" + str(ordertemp[index]) + "\n")
-
+    try:
+        d1 = d1['result']['result']
+        content = ''
+        for index in range(len(d1)):
+            ordertemp[index] = int(d1[index]['orderCount']) - orderlast[index]
+            orderlast[index] = int(d1[index]['orderCount'])
+            content += (str(d1[index]['serviceName']) + str(d1[index]
+                                                            ['orderCount']) + "/" + str(ordertemp[index]) + "\n")
+            file_object.write(str(d1[index]['serviceName']) + str(d1[index]
+                                                                ['orderCount']) + "/" + str(ordertemp[index]) + "\n")
+    except TypeError:
+        content = '被饿了么反爬了，请更新ksid'
+    
     file_object.write(str(datetime.now()) +
                       "\n===========================================\n")
     file_object.close()

@@ -6,4 +6,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     url(r'^process/$', views.process),
+    url(r'^remind/$', views.remind),
 ]
