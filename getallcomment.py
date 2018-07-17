@@ -76,13 +76,14 @@ def query(request):
     scoresum = 0
     remain = 0
     filetext = ""
+    score = {}
 
-    data = {"id":"008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":offset,"limit":limit,"serviceNO":tempid}}
+    data = {"id":"008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":offset,"limit":limit,"serviceNO":tempid}}
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(url, data=params, headers=header)
 
     while True:
-        data = {"id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "MzJiMmUzN2QtMjQ3MS00ZDkx1fSCI4YjgzNj",
+        data = {"id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG",
                                                                                 "key": "1.0.0"}, "ncp": "2.0.0", "service": "GadgetzanAPIService", "method": "getAppraisalListByServiceNO", "params": {"offset": offset, "limit": limit, "serviceNO": tempid}}
         params = json.dumps(data).encode('utf8')
         req = urllib.request.Request(url, data=params, headers=header)
@@ -102,19 +103,13 @@ def query(request):
         for index in range(len(d1)):
             t1 = datetime.strptime(
                 d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
-            d = datetime.now() - timedelta(days=900)
+            d = datetime.now() - timedelta(days=30)
             if t1 > d:
-                if ("i**1" in d1[index]['valuator']) | ("i**2" in d1[index]['valuator']) | ("i**v" in d1[index]['valuator']):
-                    filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
-                        d1[index]['compositionalScore'])+" " + str(d1[index]['createTime'])
-                    count += 1
-                    scoresum += int(d1[index]['compositionalScore'])
-                    # pass
-                else:
-                    filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
-                        d1[index]['compositionalScore'])+" " + str(d1[index]['createTime'])
-                    count += 1
-                    scoresum += int(d1[index]['compositionalScore'])
+                # score[]
+                filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
+                    d1[index]['compositionalScore'])+" " + str(d1[index]['createTime'])
+                count += 1
+                scoresum += int(d1[index]['compositionalScore'])
             else:
                 break
 

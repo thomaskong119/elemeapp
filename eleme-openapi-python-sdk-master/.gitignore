@@ -1,0 +1,26 @@
+# General
+.DS_Store
+*.py[cod]
+
+# IntelliJ IDEA
+*.iml
+.idea
+
+# Eclipse
+.classpath
+.project
+.settings
+
+
+# Directories
+/*/.iml
+
+# VS Code
+.vscode
+
+/demo
+/generatetool
+/build
+/dist
+/eleme.openapi.python.sdk.egg-info
+demoTest.py

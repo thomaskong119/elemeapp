@@ -4,13 +4,14 @@ from sdk.config import Config
 from sdk.protocol.rpc_client import RpcClient
 from sdk.apis.market_service import MarketService
 from sdk.apis.shop_service import ShopService
+from sdk.apis.message_service import MessageService
 import json
 from datetime import datetime
 from datetime import timedelta
 import time
 
 token = {
- "access_token" : ""
+ "access_token" : ''
 }
 key = "7krZAkvpzm"
 secret = "35ca3c7add3c05619f01e0dc6c63a4dd5f63fc46"
@@ -32,6 +33,9 @@ class MyLog:
 config.set_log(MyLog())
 token = json.dumps(token)
 client = RpcClient(config, token)
+
+# response = MessageService(client).get_non_reached_messages(app_id = 79237657)
+# print(response)
 
 te = time.mktime(time.strptime(datetime.today().strftime("%Y-%m-%d") + ' 00:00:00', '%Y-%m-%d %H:%M:%S'))
 ts = time.mktime(time.strptime((datetime.today()-timedelta(days=1)).strftime("%Y-%m-%d") + ' 00:00:00', '%Y-%m-%d %H:%M:%S'))
