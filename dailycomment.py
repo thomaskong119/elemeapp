@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-import urllib.request
 import json
-from pprint import pprint
-from datetime import datetime
-from datetime import timedelta
-import time
-import schedule
 import math
+import time
+import urllib.request
+from datetime import datetime, timedelta
+from pprint import pprint
+
+import schedule
 
 url = 'https://open.shop.ele.me/api/invoke?method=GadgetzanAPIService.getAppraisalListByAppId'
 header = {'Content-Type': 'application/json'}
@@ -24,12 +24,30 @@ def job(request):
     _temp = []
 
     while True:
-        data = {"id": "488aa0de-1a25-4654-ab2c-895aaebeccd4", "method": "getAppraisalListByAppId", "service": "GadgetzanAPIService", "params": {"condition": {"appId": appid,
-                                                                                                                                                              "offset": offset, "limit": limit, "sourceEnum": "APPID"}}, "metas": {"appName": "Odin", "appVersion": "4.4.0", "ksid": "ZTdlMmY3ZGEtYWM3NS00ODgw1fYoOmMWIwMj"}, "ncp": "2.0.0"}
+        data = {
+            "id": "488aa0de-1a25-4654-ab2c-895aaebeccd4",
+            "method": "getAppraisalListByAppId",
+            "service": "GadgetzanAPIService",
+            "params": {
+                "condition": {
+                    "appId": appid,
+                    "offset": offset,
+                    "limit": limit,
+                    "sourceEnum": "APPID",
+                }
+            },
+            "metas": {
+                "appName": "Odin",
+                "appVersion": "4.4.0",
+                "ksid": "MTAwMjkzNjMxNTQ1MTAxTU5naTNLTTVQ",
+            },
+            "ncp": "2.0.0",
+        }
         params = json.dumps(data).encode('utf8')
         req = urllib.request.Request(url, data=params, headers=header)
         res = urllib.request.urlopen(req)
         d1 = json.load(res)
+        # print(d1)
         if d1['result']['result'] == None:
             break
         try:
@@ -41,16 +59,27 @@ def job(request):
 
         d1 = d1['result']['result']
         for index in range(len(d1)):
-            t1 = datetime.strptime(
-                d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
+            t1 = datetime.strptime(d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
             # d = datetime.now() - timedelta(days=2)
-            te = datetime.strptime(datetime.today().strftime(
-                "%Y-%m-%d") + ' 00:00:00', '%Y-%m-%d %H:%M:%S')
-            ts = datetime.strptime((datetime.today(
-            )-timedelta(days=1)).strftime("%Y-%m-%d") + ' 00:00:00', '%Y-%m-%d %H:%M:%S')
+            te = datetime.strptime(
+                datetime.today().strftime("%Y-%m-%d") + ' 00:00:00', '%Y-%m-%d %H:%M:%S'
+            )
+            ts = datetime.strptime(
+                (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
+                + ' 00:00:00',
+                '%Y-%m-%d %H:%M:%S',
+            )
             if t1 > ts and t1 < te:
-                filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
-                    d1[index]['compositionalScore'])+" " + str(d1[index]['createTime']) + " " + str(d1[index]['orderBaseView']['shopID'])
+                filetext += (
+                    "\n"
+                    + str(d1[index]['orderNO'])
+                    + " "
+                    + str(d1[index]['compositionalScore'])
+                    + " "
+                    + str(d1[index]['createTime'])
+                    + " "
+                    + str(d1[index]['orderBaseView']['shopID'])
+                )
                 if d1[index]['compositionalScore'] == 5.0:
                     _temp.append(d1[index]['orderBaseView']['shopID'])
                 count += 1
@@ -81,3 +110,4 @@ def all_list(arr):
 
 job('79237657')
 job('72863852')
+job('55498127')

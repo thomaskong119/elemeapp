@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-import urllib.request
 import json
-from pprint import pprint
-from datetime import datetime
-from datetime import timedelta
-import time
-import schedule
 import math
+import time
+import urllib.request
+from datetime import datetime, timedelta
+from pprint import pprint
+
+import schedule
 
 url = 'https://open.shop.ele.me/api/invoke?method=GadgetzanAPIService.getAppraisalListByAppId'
 header = {'Content-Type': 'application/json'}
@@ -29,8 +29,25 @@ def job(request):
     flag = 1
 
     while flag:
-        data = {"id": "488aa0de-1a25-4654-ab2c-895aaebeccd4", "method": "getAppraisalListByAppId", "service": "GadgetzanAPIService", "params": {"condition": {"appId": appid,
-                                                                                                                                                              "offset": offset, "limit": limit, "sourceEnum": "APPID"}}, "metas": {"appName": "Odin", "appVersion": "4.4.0", "ksid": "ZTdlMmY3ZGEtYWM3NS00ODgw1fYoOmMWIwMj"}, "ncp": "2.0.0"}
+        data = {
+            "id": "488aa0de-1a25-4654-ab2c-895aaebeccd4",
+            "method": "getAppraisalListByAppId",
+            "service": "GadgetzanAPIService",
+            "params": {
+                "condition": {
+                    "appId": appid,
+                    "offset": offset,
+                    "limit": limit,
+                    "sourceEnum": "APPID",
+                }
+            },
+            "metas": {
+                "appName": "Odin",
+                "appVersion": "4.4.0",
+                "ksid": "ZTdlMmY3ZGEtYWM3NS00ODgw1fYoOmMWIwMj",
+            },
+            "ncp": "2.0.0",
+        }
         params = json.dumps(data).encode('utf8')
         req = urllib.request.Request(url, data=params, headers=header)
         res = urllib.request.urlopen(req)
@@ -50,8 +67,7 @@ def job(request):
 
         d1 = d1['result']['result']
         for index in range(len(d1)):
-            t1 = datetime.strptime(
-                d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
+            t1 = datetime.strptime(d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
             d = datetime.now() - timedelta(days=30)
             if t1 > d:
                 if d1[index]['orderBaseView']['shopID'] in counter.keys():
@@ -66,8 +82,16 @@ def job(request):
                     counter[d1[index]['orderBaseView']['shopID']] = 1
                     scoresum += d1[index]['compositionalScore']
                     count += 1
-                filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
-                    d1[index]['compositionalScore'])+" " + str(d1[index]['createTime']) + " " + str(d1[index]['orderBaseView']['shopID'])
+                filetext += (
+                    "\n"
+                    + str(d1[index]['orderNO'])
+                    + " "
+                    + str(d1[index]['compositionalScore'])
+                    + " "
+                    + str(d1[index]['createTime'])
+                    + " "
+                    + str(d1[index]['orderBaseView']['shopID'])
+                )
             else:
                 flag = 0
         offset += limit
@@ -80,15 +104,14 @@ def job(request):
     file_object.close()
     # print(str(datetime.now()))
     # print(appid)
-    scorenow = (round_up(scoresum / count*10000))/10000
+    scorenow = (round_up(scoresum / count * 10000)) / 10000
     content = "目前总共" + str(count) + "条评价\n评分：" + str(scorenow) + "\n"
-    for score in range(math.ceil(scoresum / count*10), 51, 1):
-        while round_up(scoresum / count)*10 < score:
+    for score in range(math.ceil(scoresum / count * 10), 51, 1):
+        while round_up(scoresum / count) * 10 < score:
             scoresum += 5.0
             count += 1
             remain += 1
-        content += "距离" + str(score/10) + "分还差" + \
-            str(remain) + "条好评" + "\n"
+        content += "距离" + str(score / 10) + "分还差" + str(remain) + "条好评" + "\n"
     print(content)
 
 

@@ -1,0 +1,373 @@
+@import "compass/css3";
+
+@import "compass/css3";
+
+// Form Variables
+// --------------------
+
+$font-size: 1em;
+$selected-color: violet;
+$dark-gray: darkslategray;
+$corner-radius: .3em;
+$corner-radius-sharp: .25em;
+
+
+// Remove Moz border
+::-moz-focus-inner {
+  border: 0;
+}
+
+*::selection {
+  background-color: rgba($selected-color,.8);
+}
+
+// Mixins
+// --------------------
+@mixin transition-fix {
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+}
+@mixin input-box() {
+  @include box-sizing(border-box);
+  -moz-box-sizing: border-box;
+  padding: .5em 1em;
+  border: none;
+  border-radius: $corner-radius;
+  background: #eee;
+  // Removes styling on Safari: --webkit-appearance and Mozilla: --moz-appearance
+  &:focus {
+    @include box-shadow(rgba(black, 0.05) 0 0 10px 1px inset);
+    box-sizing: border-box;
+    outline: none;
+    background: #f3f3f3;
+  }
+}
+@mixin input-text() {
+  font-size: 1em; 
+  font-family: 'Helvetica Neue', helvetica, sans-serif;
+  line-height: 1.5em;
+
+  &:focus {
+    color: $dark-gray;
+  }
+}
+@mixin input-highlight() {
+  @include transition(border, 100ms);
+
+  &:focus {
+    border-left: .5em solid $selected-color;
+  }
+}
+@mixin input-style() {
+  @include input-highlight;
+  @include input-text;
+  @include input-box;
+}
+
+
+// --------------------
+
+body {
+  background: #eee;
+  color: $dark-gray;
+  font-family: 'Helvetica Neue', helvetica, sans-serif;
+}
+h1 {
+  text-align: center;
+  font-weight: 100;
+  font-size: 3em;
+  margin: 1em 0;
+}
+
+form {
+  margin: 4em auto;
+  padding: 1em;
+  max-width: 640px;
+  background: white;
+  border-radius: $corner-radius-sharp;
+}
+
+legend {
+  display: block;
+  margin: 0 auto;
+  // width: 100%;
+}
+
+label {
+  display: inline-block;
+  margin: .5em 0;
+}
+
+input {
+  @include input-style;
+  display: block;
+  margin: .5em 0;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 50%;
+}
+
+// Text Input
+// --------------------
+input[type="text"] {
+  width: 100%;
+}
+
+
+// Radios
+// --------------------
+fieldset {
+  margin: 1em 0;
+  padding: 1em;
+  border: #f3f3f3 solid 2px;
+  border-radius: $corner-radius;
+  text-align: center;
+
+  // Radio List
+  // --------------------
+  &.radio-list {
+    text-align: left;
+    & input[type="radio"] + label {
+      display: block;
+    }
+  }
+  
+  
+  input[type="radio"] {
+    position: absolute;
+    // display: none;
+    opacity: 0;
+  }
+  input[type="radio"] + label {
+    margin-right: 1em;
+    color: #999;
+    cursor: pointer;
+  }
+  input[type="radio"]:focus + label,
+  input[type="radio"]:hover + label,
+  input[type="radio"] + label:hover,
+  input[type="radio"]:checked + label {
+    color: $dark-gray;
+  }
+  input[type="radio"] + label span {
+    display: inline-block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin-right: .25em;
+    width: 1em;
+    height: 1em;
+    border: .25em solid #ccc;
+    border-radius: 50%;
+    vertical-align: text-bottom;
+    transition: border, 200ms;
+
+  }
+  input[type="radio"]:focus + label span,
+  input[type="radio"] + label:hover span,
+  input[type="radio"] + label span:hover {
+    border: .25em solid $dark-gray;
+  }
+  input[type="radio"]:checked + label span {
+    border: .25em solid $selected-color;
+    background-color: $dark-gray;
+  }
+}
+
+// Select
+// --------------------
+
+.select {
+
+  position: relative;
+  width: 50%;
+  @include box-sizing(border-box);
+  -moz-box-sizing: border-box;
+  border: none;
+  border-radius: $corner-radius;
+  background: #eee;
+  // Removes styling on Safari: --webkit-appearance and Mozilla: --moz-appearance
+
+  &:focus {
+    @include box-shadow(rgba(black, 0.05) 0 0 10px 1px inset);
+    box-sizing: border-box;
+    outline: none;
+    background: #f3f3f3;
+  }
+
+
+  // This prevents clicking the select
+  &:after {
+    @include rotate(-45deg);
+    position: absolute;
+    right: 1em;
+    bottom: 40%;
+    display: block;
+    width: .75em;
+    height: .75em;
+    border: 2px solid $dark-gray;
+    border-top: none;
+    border-right: none;
+    content: '';
+  }
+  &:focus,
+  &:hover:after {
+    border: 4px solid $selected-color;
+    border-top: none;
+    border-right: none;
+    transition: border, 100ms;
+  }
+
+  select {
+    
+    @include appearance(none);
+    @include input-style;
+    background: transparent;
+    z-index: 1;
+    position: relative;
+    display: block;
+    width: 100%;
+    outline: none;
+    border: none;
+    font-size: 100%;
+
+
+    &:focus {
+      background: transparent;
+    }
+
+    // Not working...
+    &:focus + .select:after {
+
+      border: 4px solid $selected-color;
+      border-top: none;
+      border-right: none;
+      transition: border, 100ms;
+    }
+  }
+}
+
+// Text Area
+// --------------------
+
+textarea {
+  @include input-style;
+  display: block;
+  // min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+// Licence Text
+// --------------------
+.agreement {
+  margin: 1em 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 1em;
+  border-radius: $corner-radius;
+  background: #eee;
+  overflow: scroll;
+  max-height: 16em;
+
+  p {
+    margin: 1em 0;
+    font-size: .625em;
+    line-height: 1.2;
+    color: #999;
+  }
+}
+
+// Checkbox
+// --------------------
+input[type=checkbox] {
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    //visibility: hidden;
+}
+
+.checkbox {
+  position: relative;
+  clear: both;    
+  margin: 1em 0;
+  text-align: left;
+  & label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: $corner-radius;
+    background: #eee;
+    cursor: pointer;
+  }
+  & label:after {
+    @include opacity(0);
+    @include rotate(-45deg);
+    position: absolute;
+    bottom: .6em;
+    left: 25%;
+    width: 0;
+    height: 0;
+    border: 2px solid #333;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    content: '';
+    transition: width, height, border, 100ms;
+  }
+
+  & label:hover,
+  & input[type=checkbox]:checked + label {
+    @include box-shadow(rgba(black, 0.05) 0 0 10px 1px inset);
+  }
+
+  & input[type=checkbox]:focus + label:after,
+  & label:hover:after {
+    @include opacity(.5);
+    width: 1em;
+    height: 8px;
+  }
+  & input[type=checkbox]:checked + label:after {
+    @include opacity(1);
+    width: 1em;
+    height: .6em;
+    border: 4px solid $selected-color;
+    border-top: none;
+    border-right: none;
+  }
+  & span {
+      margin-left: 2em;
+      line-height: 20px;
+  }
+}
+
+
+// Submit Button
+// --------------------
+input[type="submit"] {
+  @include transition-property(background-color, color);
+  @include transition-duration(200ms);
+  display: block;
+  margin: 0 auto;
+  padding: .5em 2em;
+  width: 50%;
+  border: none;
+  border-radius: $corner-radius;
+  background-color: $dark-gray;
+  color: white;
+  font-size: 1em;
+  // Removes styling on Safari: --webkit-appearance and Mozilla: --moz-appearance
+  &:hover, &:active, &:focus {
+    background-color: $selected-color;
+    color: black;
+  }
+}

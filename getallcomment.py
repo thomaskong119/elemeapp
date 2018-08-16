@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*- 
-import urllib.request
+# -*- coding: utf-8 -*-
 import json
-from pprint import pprint
-from datetime import datetime
-from datetime import timedelta
-import time
-import schedule
 import math
+import time
+import urllib.request
+from datetime import datetime, timedelta
+from pprint import pprint
+
+import schedule
 
 # 店客多  749ff8fc717c4426e825e8d42ac6d4ce
 # 超级店长  7c1fccc89fd9c3a356ab276fdf9e4403
@@ -16,29 +16,32 @@ dkdid = "749ff8fc717c4426e825e8d42ac6d4ce"
 cjdzid = "7c1fccc89fd9c3a356ab276fdf9e4403"
 xpgid = "6d4fdd6db6c4c2a0507599e5c29efdfb"
 cjjpid = "4cef596097ddf479b2cc16b0df3aedf2"
-    
+
 url = 'https://app-api.shop.ele.me/buttonwood/invoke/?method=GadgetzanAPIService.getAppraisalListByServiceNO'
 header = {'Content-Type': 'application/json'}
 
+
 def job():
 
-    file_object = open('getallcomment.txt', 'w') 
+    file_object = open('getallcomment.txt', 'w')
 
     res = query("xpg")
-    print ("\n小评果"+res[0])
-    file_object.write("\n小评果"+res[2])
+    print("\n小评果" + res[0])
+    file_object.write("\n小评果" + res[2])
 
     res = query("dkd")
-    print ("\n店客多"+res[0])
-    file_object.write("\n店客多"+res[2])
+    print("\n店客多" + res[0])
+    file_object.write("\n店客多" + res[2])
 
     res = query("cjdz")
-    print ("\n超级店长"+res[0])
-    file_object.write("\n超级店长"+res[2])
+    print("\n超级店长" + res[0])
+    file_object.write("\n超级店长" + res[2])
 
-    file_object.write("\n" + str(datetime.now())+"\n===========================================")
+    file_object.write(
+        "\n" + str(datetime.now()) + "\n==========================================="
+    )
     file_object.close()
-    print (str(datetime.now()))
+    print(str(datetime.now()))
 
     # mobilelist = "18600536524"
     # dingurl = 'https://oapi.dingtalk.com/robot/send?access_token=549961be9efed1a4a1c56318e3480834521ad64920f9d7e29263dbb4bb0d30a8'
@@ -59,6 +62,7 @@ def job():
     # dingres = urllib.request.urlopen(dingreq)
     # print (dingres.read())
 
+
 def query(request):
 
     if request == "dkd":
@@ -69,7 +73,7 @@ def query(request):
         tempid = xpgid
     elif request == "cjjp":
         tempid = cjjpid
-    
+
     offset = 0
     limit = 200
     count = 0
@@ -78,13 +82,36 @@ def query(request):
     filetext = ""
     score = {}
 
-    data = {"id":"008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787","metas":{"appName":"melody","appVersion":"4.4.0","ksid":"NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG","key":"1.0.0"},"ncp":"2.0.0","service":"GadgetzanAPIService","method":"getAppraisalListByServiceNO","params":{"offset":offset,"limit":limit,"serviceNO":tempid}}
+    data = {
+        "id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787",
+        "metas": {
+            "appName": "melody",
+            "appVersion": "4.4.0",
+            "ksid": "NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG",
+            "key": "1.0.0",
+        },
+        "ncp": "2.0.0",
+        "service": "GadgetzanAPIService",
+        "method": "getAppraisalListByServiceNO",
+        "params": {"offset": offset, "limit": limit, "serviceNO": tempid},
+    }
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(url, data=params, headers=header)
 
     while True:
-        data = {"id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787", "metas": {"appName": "melody", "appVersion": "4.4.0", "ksid": "NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG",
-                                                                                "key": "1.0.0"}, "ncp": "2.0.0", "service": "GadgetzanAPIService", "method": "getAppraisalListByServiceNO", "params": {"offset": offset, "limit": limit, "serviceNO": tempid}}
+        data = {
+            "id": "008DBE4D482D431BBAC8ECC11E7EABE4|1528683444787",
+            "metas": {
+                "appName": "melody",
+                "appVersion": "4.4.0",
+                "ksid": "NGU3ZTI1YTItODJlZS00NDEw1fWK8KNmJkMG",
+                "key": "1.0.0",
+            },
+            "ncp": "2.0.0",
+            "service": "GadgetzanAPIService",
+            "method": "getAppraisalListByServiceNO",
+            "params": {"offset": offset, "limit": limit, "serviceNO": tempid},
+        }
         params = json.dumps(data).encode('utf8')
         req = urllib.request.Request(url, data=params, headers=header)
         res = urllib.request.urlopen(req)
@@ -101,13 +128,18 @@ def query(request):
         d1 = d1['result']['result']
 
         for index in range(len(d1)):
-            t1 = datetime.strptime(
-                d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
-            d = datetime.now() - timedelta(days=30)
+            t1 = datetime.strptime(d1[index]['createTime'], '%Y-%m-%d %H:%M:%S')
+            d = datetime.now() - timedelta(days=900)
             if t1 > d:
                 # score[]
-                filetext += "\n" + str(d1[index]['orderNO']) + " " + str(
-                    d1[index]['compositionalScore'])+" " + str(d1[index]['createTime'])
+                filetext += (
+                    "\n"
+                    + str(d1[index]['orderNO'])
+                    + " "
+                    + str(d1[index]['compositionalScore'])
+                    + " "
+                    + str(d1[index]['createTime'])
+                )
                 count += 1
                 scoresum += int(d1[index]['compositionalScore'])
             else:
@@ -116,23 +148,24 @@ def query(request):
         offset += limit
 
     # print(count)
-    scorenow = (round_up(scoresum / count*10000))/10000
-    content = "目前总共" + str(count) +"条评价\n评分：" + str(scorenow) + "\n"
-    for score in range(math.ceil(scoresum / count*10), 51, 1):
-        while round_up(scoresum / count)*10 < score:
+    scorenow = (round_up(scoresum / count * 10000)) / 10000
+    content = "目前总共" + str(count) + "条评价\n评分：" + str(scorenow) + "\n"
+    for score in range(math.ceil(scoresum / count * 10), 51, 1):
+        while round_up(scoresum / count) * 10 < score:
             scoresum += 5.0
             count += 1
             remain += 1
-        content += "距离" + str(score/10) + "分还差" + \
-            str(remain) + "条好评" + "\n"
+        content += "距离" + str(score / 10) + "分还差" + str(remain) + "条好评" + "\n"
     return content, count, filetext
 
-def round_up(value):     
-      return round(value * 10) / 10.0
+
+def round_up(value):
+    return round(value * 10) / 10.0
+
 
 job()
-for runtime in range(8,24):
-    schedule.every().day.at(str(runtime)+":59").do(job)
+for runtime in range(8, 24):
+    schedule.every().day.at(str(runtime) + ":59").do(job)
 
 while True:
     schedule.run_pending()

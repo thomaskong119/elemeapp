@@ -1,0 +1,21 @@
+/.dapper
+/bin
+/dist
+*.swp
+
+.DS_Store
+
+.vscode
+
+*.egg-info
+.ipynb_checkpoints
+__pycache__
+_obj
+*.pyc
+
+.bash_history
+
+stdin.json
+
+# .env should not keep in srouce control
+.env

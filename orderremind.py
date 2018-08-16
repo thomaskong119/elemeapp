@@ -27,8 +27,29 @@ def job(request):
     content = ""
     filetext = ""
 
-    data = {"id": "a3611e87-2c3d-48c1-b1bf-f10bfb9c8667", "method": "mgetOrders", "service": "GadgetzanAPIService", "params": {"condition": {"appId": appid, "orderNO": None, "orderStatus": "ALL",
-                                                                                                                                             "beginTime": None, "endTime": None, "offset": 0, "limit": 50, "source": "APPID"}}, "metas": {"appName": "Odin", "appVersion": "4.4.0", "ksid": "ZTdlMmY3ZGEtYWM3NS00ODgw1fYoOmMWIwMj"}, "ncp": "2.0.0"}
+    data = {
+        "id": "a3611e87-2c3d-48c1-b1bf-f10bfb9c8667",
+        "method": "mgetOrders",
+        "service": "GadgetzanAPIService",
+        "params": {
+            "condition": {
+                "appId": appid,
+                "orderNO": None,
+                "orderStatus": "ALL",
+                "beginTime": None,
+                "endTime": None,
+                "offset": 0,
+                "limit": 50,
+                "source": "APPID",
+            }
+        },
+        "metas": {
+            "appName": "Odin",
+            "appVersion": "4.4.0",
+            "ksid": "ZTdlMmY3ZGEtYWM3NS00ODgw1fYoOmMWIwMj",
+        },
+        "ncp": "2.0.0",
+    }
     params = json.dumps(data).encode('utf8')
     req = urllib.request.Request(url, data=params, headers=header)
     try:
@@ -44,21 +65,48 @@ def job(request):
     else:
         for index in range(len(d1)):
             try:
-                if datetime.now() - timedelta(minutes=10) > datetime.strptime(d1[index]['payTime'], '%Y-%m-%dT%H:%M:%S'):
+                if datetime.now() - timedelta(minutes=10) > datetime.strptime(
+                    d1[index]['payTime'], '%Y-%m-%dT%H:%M:%S'
+                ):
                     # print(appid + " Not new order")
                     pass
                 elif d1[index]['orderStatus'] == 'PAY_SUCCESS':
-                    filetext += "\n" + appid + ' ' + str(d1[index]['orderNO']) + " " + str(
-                        d1[index]['orderType'])+" " + str(d1[index]['payTime']) + " " + str(d1[index]['shopID']) + " " + str(d1[index]['contacts'])
-                    content += "\n" + appid + ' ' + str(d1[index]['orderNO']) + " " + str(
-                        d1[index]['orderType'])+" " + str(d1[index]['payTime']) + " " + str(d1[index]['shopID']) + " " + str(d1[index]['contacts'])
+                    filetext += (
+                        "\n"
+                        + appid
+                        + ' '
+                        + str(d1[index]['orderNO'])
+                        + " "
+                        + str(d1[index]['orderType'])
+                        + " "
+                        + str(d1[index]['payTime'])
+                        + " "
+                        + str(d1[index]['shopID'])
+                        + " "
+                        + str(d1[index]['contacts'])
+                    )
+                    content += (
+                        "\n"
+                        + appid
+                        + ' '
+                        + str(d1[index]['orderNO'])
+                        + " "
+                        + str(d1[index]['orderType'])
+                        + " "
+                        + str(d1[index]['payTime'])
+                        + " "
+                        + str(d1[index]['shopID'])
+                        + " "
+                        + str(d1[index]['contacts'])
+                    )
                     print(int(d1[index]['contacts']))
                     sendmsg(str(d1[index]['contacts']), msgcontent)
             except TypeError:
                 pass
 
-    file_object.write(str(datetime.now()) + filetext + 
-                      "\n===========================================")
+    file_object.write(
+        str(datetime.now()) + filetext + "\n==========================================="
+    )
     file_object.close()
 
     # print(content)
@@ -71,8 +119,16 @@ def sendmsg(to, content):
     # print(content)
     signature = 'dded839a7db21a859155793987c46c85'
     # submaildata = 'appid='+appid+'&to='+to+'&content=【小评果】'+content+'退订回N &signature='+signature
-    submaildata = 'appid='+appid+'&to='+to + \
-        '&content=【饿了么-小评果】'+content+'&signature='+signature
+    submaildata = (
+        'appid='
+        + appid
+        + '&to='
+        + to
+        + '&content=【饿了么-小评果】'
+        + content
+        + '&signature='
+        + signature
+    )
     submailurl = 'https://api.mysubmail.com/message/send.json'
     submailparam = submaildata.encode('utf8')
     subreq = urllib.request.Request(submailurl, data=submailparam)

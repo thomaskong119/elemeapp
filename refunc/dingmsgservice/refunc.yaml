@@ -1,0 +1,15 @@
+apiVersion: k8s.refunc.io/v1
+kind: Funcdef
+metadata:
+  name: dingmsgservice
+  namespace: appleoperation
+  annotations:
+    sys.funcs.refunc.io/builder: python
+spec:
+  entry: refunc /refunc-data/root/main.py
+  maxReplicas: 1
+  meta:
+    path: appleoperation/dingmsgservice
+  runtime:
+    name: python36-db
+    timeout: 90

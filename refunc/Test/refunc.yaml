@@ -1,0 +1,23 @@
+﻿apiVersion: k8s.refunc.io/v1
+kind: Funcdef
+metadata:
+  name: test
+  namespace: citest
+  annotations:
+    sys.funcs.refunc.io/builder: python
+spec:
+  entry: refunc /refunc-data/root/main.py
+  maxReplicas: 1
+  meta:
+    path: citest/test
+    name: asfsd
+    desc: 
+    readmepath: introduction/citest/test/README.md
+    category: text
+    iconpath: introduction/citest/test/icon.png
+    publish: False
+  runtime:
+    envs:
+      HTTPS_PROXY: http://gost.proxy:8888
+    name: python36
+    timeout: 9
